@@ -1,567 +1,1545 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Bimbsy Glam Fashion — ready-to-wear, corporate wear, kidswear, fascinators, gele, accessories, tailoring commissions and fashion illustration in Lagos, Nigeria.">
-<title>Bimbsy Glam Fashion | Wear Your Confidence</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<style>
-:root {
-  --wine: #701f3d;
-  --dark: #351323;
-  --rose: #f6e9ed;
-  --gold: #c5a16a;
-  --cream: #fffaf7;
-  --text: #49343d;
-}
-* { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: var(--cream);
-  color: var(--text);
-  line-height: 1.6;
-}
-a { color: inherit; text-decoration: none; }
-img { width: 100%; display: block; object-fit: cover; }
-header {
-  background: white;
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  box-shadow: 0 2px 12px #35132312;
-}
-nav {
-  max-width: 1150px;
-  margin: auto;
-  padding: 12px 20px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 18px;
-}
-.brand { display: flex; align-items: center; gap: 12px; }
-.brand img { width: 85px; height: 58px; object-fit: contain; }
-.brand strong {
-  display: block;
-  font-family: Georgia, serif;
-  color: var(--wine);
-  font-size: 1.15rem;
-}
-.brand small { color: #80616e; font-size: .72rem; }
-.nav-links { display: flex; gap: 20px; align-items: center; }
-.nav-links a:hover { color: var(--gold); }
-.menu-button {
-  display: none;
-  border: 0;
-  background: none;
-  font-size: 1.6rem;
-  color: var(--wine);
-}
-.announcement {
-  background: var(--wine);
-  color: white;
-  text-align: center;
-  padding: 7px;
-  font-size: .83rem;
-}
-.hero {
-  min-height: 550px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  align-items: center;
-  gap: 35px;
-  padding: 65px max(6%, calc((100% - 1150px)/2));
-  background: linear-gradient(120deg, #fffaf7, #f6e9ed);
-}
-.eyebrow {
-  text-transform: uppercase;
-  letter-spacing: 3px;
-  color: var(--wine);
-  font-size: .78rem;
-  font-weight: bold;
-}
-h1, h2, h3 { font-family: Georgia, serif; }
-h1 {
-  color: var(--dark);
-  font-size: clamp(2.5rem, 5vw, 4.6rem);
-  line-height: 1.08;
-  margin: 15px 0;
-}
-h1 span { color: var(--wine); }
-.hero p { max-width: 520px; }
-.hero-image {
-  height: 440px;
-  border-radius: 180px 180px 18px 18px;
-  overflow: hidden;
-  box-shadow: 0 16px 35px #35132320;
-}
-.hero-image img { height: 100%; }
-.buttons { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 25px; }
-.btn {
-  display: inline-block;
-  padding: 13px 21px;
-  border-radius: 5px;
-  background: var(--wine);
-  color: white;
-  border: 1px solid var(--wine);
-  cursor: pointer;
-  font-weight: bold;
-}
-.btn:hover { background: var(--dark); }
-.btn-outline { background: transparent; color: var(--wine); }
-section { padding: 75px 20px; }
-.container { max-width: 1150px; margin: auto; }
-.section-heading { text-align: center; max-width: 720px; margin: 0 auto 38px; }
-.section-heading h2 { color: var(--dark); font-size: clamp(2rem, 4vw, 3rem); margin: 8px 0; }
-.section-heading p { color: #806c75; }
-.collections { background: white; }
-.cards {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-}
-.card {
-  border: 1px solid #eee0e5;
-  border-radius: 12px;
-  overflow: hidden;
-  background: white;
-  transition: transform .2s;
-}
-.card:hover { transform: translateY(-4px); }
-.card img { height: 270px; }
-.card-content { padding: 20px; }
-.card h3 { color: var(--wine); margin: 0 0 8px; font-size: 1.35rem; }
-.card p { font-size: .94rem; color: #806c75; }
-.text-link { color: var(--wine); font-weight: bold; }
-.services { background: var(--rose); }
-.service-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-}
-.service {
-  background: white;
-  border-radius: 12px;
-  padding: 25px;
-  border-bottom: 3px solid var(--gold);
-}
-.service .symbol { font-size: 2rem; }
-.service h3 { color: var(--wine); }
-.about-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 45px;
-  align-items: center;
-}
-.about-grid img { height: 400px; border-radius: 12px; }
-.about-grid h2 { color: var(--dark); font-size: 2.5rem; }
-.checks { padding-left: 20px; }
-.checks li { margin-bottom: 10px; }
-.steps {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-}
-.step {
-  padding: 25px;
-  border: 1px solid #ead9df;
-  border-radius: 12px;
-  background: white;
-}
-.step b { color: var(--gold); font: 2.4rem Georgia, serif; }
-.contact { background: var(--dark); color: white; }
-.contact .section-heading h2 { color: white; }
-.contact-grid {
-  display: grid;
-  grid-template-columns: .8fr 1.2fr;
-  gap: 35px;
-}
-.contact-info {
-  padding: 25px;
-  background: #ffffff0c;
-  border-radius: 12px;
-}
-.contact-info a { color: #f0d5b0; }
-form {
-  background: white;
-  color: var(--text);
-  padding: 25px;
-  border-radius: 12px;
-}
-.form-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 15px;
-}
-.field { margin-bottom: 15px; }
-label { display: block; font-size: .88rem; font-weight: bold; margin-bottom: 6px; }
-input, select, textarea {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #dfcdd4;
-  border-radius: 5px;
-  font: inherit;
-  background: white;
-}
-textarea { min-height: 110px; resize: vertical; }
-.full { grid-column: 1 / -1; }
-form button { width: 100%; }
-.note { font-size: .8rem; color: #806c75; }
-footer {
-  padding: 25px 20px;
-  background: #24101a;
-  color: #f8eaf0;
-  text-align: center;
-  font-size: .9rem;
-}
-.whatsapp {
-  position: fixed;
-  right: 18px;
-  bottom: 18px;
-  z-index: 20;
-  background: #168b51;
-  color: white;
-  padding: 13px 18px;
-  border-radius: 50px;
-  box-shadow: 0 5px 18px #0003;
-  font-weight: bold;
-}
-@media (max-width: 800px) {
-  .hero, .about-grid, .contact-grid { grid-template-columns: 1fr; }
-  .hero { padding: 45px 22px; }
-  .hero-image { height: 360px; }
-  .cards, .service-grid, .steps { grid-template-columns: repeat(2, 1fr); }
-  .nav-links {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background: white;
-    padding: 20px;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  .nav-links.open { display: flex; }
-  .menu-button { display: block; }
-}
-@media (max-width: 520px) {
-  .cards, .service-grid, .steps, .form-grid { grid-template-columns: 1fr; }
-  .brand img { width: 65px; }
-  .brand strong { font-size: 1rem; }
-  .hero-image { height: 310px; }
-  .card img { height: 300px; }
-}
-</style>
+    <title>Bimbsy Glam Fashion | Ready-to-Wear Fashion</title>
+
+    <meta name="description" content="Discover stylish ready-to-wear fashion, corporate outfits, women's wear and custom designs from Bimbsy Glam Fashion.">
+
+    <style>
+        /* BASIC WEBSITE STYLING */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #fffaf7;
+            color: #292323;
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        button {
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        :root {
+            --primary: #6f183b;
+            --secondary: #d7a6b8;
+            --background: #fffaf7;
+            --text: #292323;
+            --white: #ffffff;
+            --muted: #786b70;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section {
+            padding: 70px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .section-title h2 {
+            font-size: 32px;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .section-title p {
+            color: var(--muted);
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 13px 25px;
+            border-radius: 5px;
+            border: 2px solid var(--primary);
+            transition: 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: transparent;
+            color: var(--primary);
+        }
+    </style>
 </head>
-
 <body>
-<div class="announcement">A little glamour, made with care · Lagos, Nigeria</div>
+  
+    <!-- WEBSITE HEADER -->
+    <header class="site-header">
+        <div class="container header-container">
 
-<header>
-  <nav aria-label="Main navigation">
-    <a class="brand" href="#home" aria-label="Bimbsy Glam Fashion home">
-      <img src="logo.png" alt="Bimbsy Glam Fashion logo">
-      <span>
-        <strong>Bimbsy Glam Fashion</strong>
-        <small>Wear Your Confidence</small>
-      </span>
-    </a>
-    <button class="menu-button" onclick="toggleMenu()" aria-label="Open menu">☰</button>
-    <div class="nav-links" id="navLinks">
-      <a href="#home" onclick="closeMenu()">Home</a>
-      <a href="#collections" onclick="closeMenu()">Collections</a>
-      <a href="#services" onclick="closeMenu()">Services</a>
-      <a href="#about" onclick="closeMenu()">About</a>
-      <a href="#contact" onclick="closeMenu()">Enquiries</a>
-    </div>
-  </nav>
-</header>
+            <!-- BRAND NAME / LOGO -->
+            <a href="#home" class="brand">
+                <span class="brand-name">BIMBSY</span>
+                <span class="brand-subtitle">GLAM FASHION</span>
+            </a>
 
-<main>
-<section class="hero" id="home">
-  <div>
-    <div class="eyebrow">Style · Elegance · Craftsmanship</div>
-    <h1>Wear Your <span>Confidence.</span></h1>
-    <p>
-      Welcome to Bimbsy Glam Fashion, where beautiful style meets thoughtful
-      craftsmanship. Explore ready-to-wear fashion, corporate outfits,
-      kidswear and accessories—or hire us for custom sewing and fashion sketches.
-    </p>
-    <div class="buttons">
-      <a class="btn" href="#collections">Explore Collections</a>
-      <a class="btn btn-outline" href="#contact">Make An Enquiry</a>
-    </div>
-  </div>
-  <div class="hero-image">
-    <img src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=1000&q=85"
-         alt="Fashion style inspiration">
-  </div>
-</section>
+            <!-- MOBILE MENU BUTTON -->
+            <button
+                class="menu-toggle"
+                id="menuToggle"
+                aria-label="Open navigation menu"
+                aria-expanded="false"
+                aria-controls="mainNavigation"
+                type="button">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
 
-<section class="collections" id="collections">
-  <div class="container">
-    <div class="section-heading">
-      <div class="eyebrow">Discover Our Style</div>
-      <h2>Our Collections</h2>
-      <p>Find your style, choose your details, and let us help bring your fashion ideas to life.</p>
-    </div>
+            <!-- MAIN NAVIGATION -->
+            <nav class="main-navigation" id="mainNavigation">
+                <a href="#home" class="nav-link">Home</a>
+                <a href="#collections" class="nav-link">Collections</a>
+                <a href="#about" class="nav-link">About Us</a>
+                <a href="#services" class="nav-link">Our Services</a>
+                <a href="#contact" class="nav-link">Contact</a>
 
-    <div class="cards">
-      <article class="card">
-        <img src="https://images.unsplash.com/photo-1487222477894-8943e31ef7b2?auto=format&fit=crop&w=800&q=80" alt="Women's fashion inspiration" loading="lazy">
-        <div class="card-content">
-          <h3>Women's Ready-to-Wear</h3>
-          <p>Stylish, flattering outfits for everyday wear, outings and special occasions.</p>
-          <a class="text-link" href="#contact" onclick="chooseService('Women’s Ready-to-Wear')">Enquire about outfits →</a>
+                <a href="#collections" class="btn nav-button">
+                    Shop Collection
+                </a>
+            </nav>
+
         </div>
-      </article>
+    </header>
 
-      <article class="card">
-        <img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&w=800&q=80" alt="Smart clothing inspiration" loading="lazy">
-        <div class="card-content">
-          <h3>Corporate Wear</h3>
-          <p>Smart, polished looks for work, meetings and professional occasions.</p>
-          <a class="text-link" href="#contact" onclick="chooseService('Corporate Wear')">Enquire about corporate wear →</a>
+    <!-- HEADER STYLES -->
+    <style>
+        .site-header {
+            background: var(--white);
+            border-bottom: 1px solid #f0e4e8;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.04);
+        }
+
+        .header-container {
+            min-height: 85px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 25px;
+        }
+
+        .brand {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.15;
+            flex-shrink: 0;
+        }
+
+        .brand-name {
+            color: var(--primary);
+            font-size: 27px;
+            font-weight: 800;
+            letter-spacing: 3px;
+        }
+
+        .brand-subtitle {
+            color: var(--muted);
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 4px;
+            margin-top: 5px;
+        }
+
+        .main-navigation {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .nav-link {
+            color: var(--text);
+            font-size: 14px;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+        .nav-button {
+            padding: 10px 17px;
+            font-size: 13px;
+        }
+
+        .menu-toggle {
+            display: none;
+            width: 42px;
+            height: 42px;
+            border: 1px solid #ead9df;
+            background: var(--white);
+            border-radius: 5px;
+            padding: 9px;
+        }
+
+        .menu-toggle span {
+            display: block;
+            width: 100%;
+            height: 2px;
+            background: var(--primary);
+            margin: 5px 0;
+        }
+
+        @media (max-width: 850px) {
+            .header-container {
+                min-height: 75px;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .main-navigation {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--white);
+                padding: 25px 5%;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 20px;
+                border-top: 1px solid #f0e4e8;
+                box-shadow: 0 10px 15px rgba(0, 0, 0, 0.06);
+            }
+
+            .main-navigation.active {
+                display: flex;
+            }
+
+            .nav-link {
+                padding: 5px 0;
+            }
+
+            .nav-button {
+                text-align: center;
+            }
+        }
+    </style>
+
+    <!-- HOMEPAGE HERO SECTION -->
+    <main>
+        <section class="hero" id="home">
+            <div class="container hero-container">
+
+                <!-- HERO TEXT -->
+                <div class="hero-content">
+                    <p class="hero-eyebrow">
+                        BIMBSY GLAM FASHION
+                    </p>
+
+                    <h1>
+                        Elegance That
+                        <span>Speaks For You.</span>
+                    </h1>
+
+                    <p class="hero-description">
+                        Discover beautifully crafted ready-to-wear outfits
+                        designed to celebrate your confidence, personality
+                        and unique style.
+                    </p>
+
+                    <div class="hero-actions">
+                        <a href="#collections" class="btn">
+                            Explore Our Collection
+                        </a>
+
+                        <a href="#about" class="btn btn-outline">
+                            Discover Our Brand
+                        </a>
+                    </div>
+
+                    <div class="hero-highlights">
+                        <div class="hero-highlight">
+                            <strong>Ready-to-Wear</strong>
+                            <span>Style made simple</span>
+                        </div>
+
+                        <div class="hero-highlight">
+                            <strong>Made with Care</strong>
+                            <span>Details that matter</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- HERO IMAGE -->
+                <div class="hero-image-wrapper">
+                    <div class="hero-image-frame">
+                        <img
+                            src="images/hero-fashion.jpg"
+                            alt="Elegant ready-to-wear fashion by Bimbsy Glam Fashion"
+                            class="hero-image"
+                        >
+                    </div>
+
+                    <div class="hero-image-caption">
+                        <span class="caption-label">THE NEW COLLECTION</span>
+                        <span class="caption-title">
+                            Confidence in Every Stitch
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- HERO SECTION STYLES -->
+    <style>
+        .hero {
+            padding: 75px 0 85px;
+            background:
+                linear-gradient(
+                    120deg,
+                    #fffaf7 0%,
+                    #f9edf1 100%
+                );
+            overflow: hidden;
+        }
+
+        .hero-container {
+            display: grid;
+            grid-template-columns: 1fr 0.9fr;
+            align-items: center;
+            gap: 65px;
+        }
+
+        .hero-content {
+            max-width: 600px;
+        }
+
+        .hero-eyebrow {
+            color: var(--primary);
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 4px;
+            margin-bottom: 22px;
+        }
+
+        .hero-content h1 {
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(40px, 5vw, 68px);
+            line-height: 1.1;
+            font-weight: 500;
+            margin-bottom: 25px;
+        }
+
+        .hero-content h1 span {
+            display: block;
+            color: var(--primary);
+            font-style: italic;
+        }
+
+        .hero-description {
+            color: var(--muted);
+            font-size: 16px;
+            line-height: 1.9;
+            max-width: 480px;
+            margin-bottom: 30px;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            margin-bottom: 45px;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .hero-highlights {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 35px;
+            padding-top: 25px;
+            border-top: 1px solid #e8d4dc;
+        }
+
+        .hero-highlight {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .hero-highlight strong {
+            color: var(--primary);
+            font-size: 14px;
+        }
+
+        .hero-highlight span {
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .hero-image-wrapper {
+            position: relative;
+            padding-bottom: 55px;
+        }
+
+        .hero-image-frame {
+            height: 530px;
+            overflow: hidden;
+            border-radius: 180px 180px 8px 8px;
+            background: #ead9df;
+        }
+
+        .hero-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hero-image-caption {
+            position: absolute;
+            bottom: 0;
+            left: -30px;
+            background: var(--white);
+            padding: 20px 25px;
+            min-width: 250px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .caption-label {
+            color: var(--primary);
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        .caption-title {
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 17px;
+        }
+
+        @media (max-width: 850px) {
+            .hero {
+                padding: 50px 0 65px;
+            }
+
+            .hero-container {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .hero-content {
+                max-width: 100%;
+            }
+
+            .hero-content h1 {
+                font-size: clamp(38px, 10vw, 55px);
+            }
+
+            .hero-description {
+                font-size: 15px;
+            }
+
+            .hero-image-wrapper {
+                max-width: 520px;
+                width: 100%;
+                margin: 0 auto;
+            }
+
+            .hero-image-frame {
+                height: 430px;
+            }
+
+            .hero-image-caption {
+                left: -5px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .hero-actions .btn {
+                text-align: center;
+            }
+
+            .hero-image-frame {
+                height: 350px;
+            }
+
+            .hero-highlights {
+                gap: 20px;
+            }
+
+            .hero-image-caption {
+                padding: 15px;
+                min-width: 220px;
+            }
+        }
+    </style>
+
+    <!-- FASHION COLLECTIONS SECTION -->
+    <section class="section collections" id="collections">
+        <div class="container">
+
+            <div class="section-title">
+                <p class="collections-eyebrow">FIND YOUR STYLE</p>
+                <h2>Explore Our Collections</h2>
+                <p>
+                    Thoughtfully designed fashion for every mood,
+                    moment and occasion.
+                </p>
+            </div>
+
+            <!-- COLLECTION CATEGORY CARDS -->
+            <div class="collection-grid">
+
+                <article class="collection-card">
+                    <a href="#contact" class="collection-image-link">
+                        <img
+                            src="images/womens-wear.jpg"
+                            alt="Women's ready-to-wear fashion"
+                            class="collection-image"
+                            loading="lazy"
+                        >
+                        <span class="collection-overlay">
+                            Explore Collection
+                        </span>
+                    </a>
+
+                    <div class="collection-info">
+                        <span class="collection-number">01</span>
+                        <h3>Women's Ready-to-Wear</h3>
+                        <p>
+                            Elegant everyday looks and stylish
+                            outfits for your wardrobe.
+                        </p>
+                        <a href="#contact" class="collection-link">
+                            Discover More &rarr;
+                        </a>
+                    </div>
+                </article>
+
+                <article class="collection-card">
+                    <a href="#contact" class="collection-image-link">
+                        <img
+                            src="images/corporate-wear.jpg"
+                            alt="Women's corporate and office wear"
+                            class="collection-image"
+                            loading="lazy"
+                        >
+                        <span class="collection-overlay">
+                            Explore Collection
+                        </span>
+                    </a>
+
+                    <div class="collection-info">
+                        <span class="collection-number">02</span>
+                        <h3>Corporate Wear</h3>
+                        <p>
+                            Polished, confident styles for work,
+                            meetings and professional occasions.
+                        </p>
+                        <a href="#contact" class="collection-link">
+                            Discover More &rarr;
+                        </a>
+                    </div>
+                </article>
+
+                <article class="collection-card">
+                    <a href="#contact" class="collection-image-link">
+                        <img
+                            src="images/custom-designs.jpg"
+                            alt="Custom-made fashion designs"
+                            class="collection-image"
+                            loading="lazy"
+                        >
+                        <span class="collection-overlay">
+                            Explore Collection
+                        </span>
+                    </a>
+
+                    <div class="collection-info">
+                        <span class="collection-number">03</span>
+                        <h3>Custom Designs</h3>
+                        <p>
+                            Personalised outfits made with attention
+                            to your style and fitting preferences.
+                        </p>
+                        <a href="#contact" class="collection-link">
+                            Discover More &rarr;
+                        </a>
+                    </div>
+                </article>
+
+                <article class="collection-card">
+                    <a href="#contact" class="collection-image-link">
+                        <img
+                            src="images/accessories.jpg"
+                            alt="Fashion accessories and fascinators"
+                            class="collection-image"
+                            loading="lazy"
+                        >
+                        <span class="collection-overlay">
+                            Explore Collection
+                        </span>
+                    </a>
+
+                    <div class="collection-info">
+                        <span class="collection-number">04</span>
+                        <h3>Accessories &amp; Details</h3>
+                        <p>
+                            Fascinators, gele, beading and finishing
+                            touches to complete your look.
+                        </p>
+                        <a href="#contact" class="collection-link">
+                            Discover More &rarr;
+                        </a>
+                    </div>
+                </article>
+
+            </div>
+
+            <div class="collections-footer">
+                <p>
+                    Looking for something unique?
+                    Let's create a look just for you.
+                </p>
+
+                <a href="#contact" class="btn">
+                    Make an Enquiry
+                </a>
+            </div>
+
         </div>
-      </article>
+    </section>
 
-      <article class="card">
-        <img src="https://images.unsplash.com/photo-1519238263530-99bdd11df2ea?auto=format&fit=crop&w=800&q=80" alt="Children's clothing inspiration" loading="lazy">
-        <div class="card-content">
-          <h3>Kidswear — All Ages</h3>
-          <p>Clothing ideas for babies, toddlers and older children, for everyday wear and occasions.</p>
-          <a class="text-link" href="#contact" onclick="chooseService('Kidswear')">Enquire about kidswear →</a>
+    <!-- COLLECTIONS STYLES -->
+    <style>
+        .collections {
+            background: var(--white);
+        }
+
+        .collections-eyebrow {
+            color: var(--primary);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+        }
+
+        .collection-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 35px;
+        }
+
+        .collection-card {
+            background: var(--background);
+            border: 1px solid #f0e4e8;
+            transition: transform 0.3s ease,
+                        box-shadow 0.3s ease;
+        }
+
+        .collection-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(60, 20, 35, 0.08);
+        }
+
+        .collection-image-link {
+            display: block;
+            position: relative;
+            overflow: hidden;
+            background: #ead9df;
+        }
+
+        .collection-image {
+            width: 100%;
+            height: 310px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .collection-card:hover .collection-image {
+            transform: scale(1.04);
+        }
+
+        .collection-overlay {
+            position: absolute;
+            inset: auto 0 0;
+            padding: 25px 15px 15px;
+            text-align: center;
+            color: var(--white);
+            font-size: 13px;
+            font-weight: 600;
+            background: linear-gradient(
+                transparent,
+                rgba(30, 10, 20, 0.75)
+            );
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .collection-card:hover .collection-overlay {
+            opacity: 1;
+        }
+
+        .collection-info {
+            padding: 25px;
+        }
+
+        .collection-number {
+            color: var(--secondary);
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        .collection-info h3 {
+            margin: 8px 0 10px;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 24px;
+            font-weight: 500;
+            color: var(--primary);
+        }
+
+        .collection-info p {
+            font-size: 14px;
+            color: var(--muted);
+            line-height: 1.8;
+            margin-bottom: 18px;
+        }
+
+        .collection-link {
+            display: inline-block;
+            color: var(--primary);
+            font-size: 13px;
+            font-weight: 700;
+            border-bottom: 1px solid var(--secondary);
+            padding-bottom: 4px;
+        }
+
+        .collections-footer {
+            margin-top: 45px;
+            padding: 30px;
+            text-align: center;
+            background: #f9edf1;
+        }
+
+        .collections-footer p {
+            color: var(--text);
+            margin-bottom: 18px;
+        }
+
+        @media (max-width: 650px) {
+            .collection-grid {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+
+            .collection-image {
+                height: 280px;
+            }
+
+            .collection-info {
+                padding: 20px;
+            }
+
+            .collection-info h3 {
+                font-size: 22px;
+            }
+
+            .collections-footer {
+                padding: 25px 15px;
+            }
+        }
+    </style>
+  
+
+    <!-- ABOUT OUR BRAND -->
+    <section class="section about" id="about">
+        <div class="container about-container">
+
+            <div class="about-image">
+                <img
+                    src="images/about-bimbsy-glam.jpg"
+                    alt="Fashion craftsmanship at Bimbsy Glam Fashion"
+                    loading="lazy"
+                >
+                <div class="about-image-label">
+                    <span>OUR BRAND</span>
+                    <strong>Style. Detail. Confidence.</strong>
+                </div>
+            </div>
+
+            <div class="about-content">
+                <p class="about-eyebrow">OUR STORY</p>
+
+                <h2>
+                    Fashion That
+                    <span>Feels Like You.</span>
+                </h2>
+
+                <p>
+                    At Bimbsy Glam Fashion, we believe that what you wear
+                    should help you express your personality with confidence.
+                </p>
+
+                <p>
+                    Our focus is on stylish ready-to-wear pieces, thoughtful
+                    details and designs that make dressing for everyday
+                    life and special occasions feel effortless.
+                </p>
+
+                <p>
+                    From outfit ideas to carefully finished garments,
+                    we are building a fashion brand inspired by creativity,
+                    craftsmanship and individual style.
+                </p>
+
+                <a href="#contact" class="btn">
+                    Let's Talk Fashion
+                </a>
+            </div>
+
         </div>
-      </article>
+    </section>
 
-      <article class="card">
-        <img src="https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=800&q=80" alt="Occasion fashion inspiration" loading="lazy">
-        <div class="card-content">
-          <h3>Fascinators & Gele</h3>
-          <p>Elegant headwear and styling details for weddings, celebrations and special events.</p>
-          <a class="text-link" href="#contact" onclick="chooseService('Fascinators & Gele')">Make an enquiry →</a>
+    <!-- OUR SERVICES -->
+    <section class="section services" id="services">
+        <div class="container">
+
+            <div class="section-title">
+                <p class="services-eyebrow">WHAT WE DO</p>
+                <h2>Our Fashion Services</h2>
+                <p>
+                    Explore our fashion offerings and contact us
+                    about the service you need.
+                </p>
+            </div>
+
+            <div class="services-grid">
+
+                <article class="service-card">
+                    <div class="service-icon" aria-hidden="true">
+                        &#10022;
+                    </div>
+                    <h3>Ready-to-Wear</h3>
+                    <p>
+                        Shop stylish outfits designed for everyday
+                        wear, outings and special moments.
+                    </p>
+                </article>
+
+                <article class="service-card">
+                    <div class="service-icon" aria-hidden="true">
+                        &#10047;
+                    </div>
+                    <h3>Custom Tailoring</h3>
+                    <p>
+                        Enquire about personalised garments,
+                        fitting preferences and custom designs.
+                    </p>
+                </article>
+
+                <article class="service-card">
+                    <div class="service-icon" aria-hidden="true">
+                        &#10024;
+                    </div>
+                    <h3>Fashion Accessories</h3>
+                    <p>
+                        Ask us about fascinators, gele, beading
+                        and finishing details.
+                    </p>
+                </article>
+
+                <article class="service-card">
+                    <div class="service-icon" aria-hidden="true">
+                        &#9825;
+                    </div>
+                    <h3>Fashion Illustration</h3>
+                    <p>
+                        Discuss your fashion ideas and explore
+                        creative design concepts with us.
+                    </p>
+                </article>
+
+            </div>
         </div>
-      </article>
+    </section>
 
-      <article class="card">
-        <img src="https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=800&q=80" alt="Bags and accessories inspiration" loading="lazy">
-        <div class="card-content">
-          <h3>Bags & Accessories</h3>
-          <p>Accessories to complement your outfits, including bag and gele-bag enquiries.</p>
-          <a class="text-link" href="#contact" onclick="chooseService('Bags & Accessories')">Ask about accessories →</a>
+    <!-- CONTACT AND ENQUIRY -->
+    <section class="section contact" id="contact">
+        <div class="container contact-container">
+
+            <div class="contact-content">
+                <p class="contact-eyebrow">GET IN TOUCH</p>
+
+                <h2>
+                    Let's Create Something
+                    <span>Beautiful Together.</span>
+                </h2>
+
+                <p>
+                    Have a question about our collection, a custom
+                    outfit or a fashion service? Send us an enquiry.
+                </p>
+
+                <div class="contact-detail">
+                    <strong>Brand</strong>
+                    <span>Bimbsy Glam Fashion</span>
+                </div>
+
+                <div class="contact-detail">
+                    <strong>Location</strong>
+                    <span>Lagos, Nigeria</span>
+                </div>
+
+                <p class="contact-note">
+                    Contact details and social media links can be
+                    added here before the website goes live.
+                </p>
+            </div>
+
+            <form class="contact-form" id="contactForm">
+                <h3>Send an Enquiry</h3>
+
+                <label for="customerName">Your name</label>
+                <input
+                    type="text"
+                    id="customerName"
+                    name="name"
+                    placeholder="Enter your name"
+                    autocomplete="name"
+                    required
+                >
+
+                <label for="customerEmail">Email address</label>
+                <input
+                    type="email"
+                    id="customerEmail"
+                    name="email"
+                    placeholder="Enter your email"
+                    autocomplete="email"
+                    required
+                >
+
+                <label for="customerInterest">What are you interested in?</label>
+                <select
+                    id="customerInterest"
+                    name="interest"
+                    required
+                >
+                    <option value="">Choose a service</option>
+                    <option value="Ready-to-Wear">Ready-to-Wear</option>
+                    <option value="Corporate Wear">Corporate Wear</option>
+                    <option value="Custom Tailoring">Custom Tailoring</option>
+                    <option value="Accessories">Accessories</option>
+                    <option value="Fashion Illustration">Fashion Illustration</option>
+                    <option value="Other Enquiry">Other Enquiry</option>
+                </select>
+
+                <label for="customerMessage">Your message</label>
+                <textarea
+                    id="customerMessage"
+                    name="message"
+                    rows="5"
+                    placeholder="Tell us what you need..."
+                    required
+                ></textarea>
+
+                <button type="submit" class="btn contact-submit">
+                    Send Enquiry
+                </button>
+
+                <p class="form-notice" id="formNotice" role="status">
+                    Your enquiry form needs to be connected to a
+                    working submission method before launch.
+                </p>
+            </form>
+
         </div>
-      </article>
+    </section>
 
-      <article class="card">
-        <img src="https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=800&q=80" alt="Creative design and embellishment inspiration" loading="lazy">
-        <div class="card-content">
-          <h3>Beading & Embellishment</h3>
-          <p>Decorative details and finishing to give garments a special, personal touch.</p>
-          <a class="text-link" href="#contact" onclick="chooseService('Beading & Embellishment')">Discuss your design →</a>
+    <!-- ABOUT, SERVICES AND CONTACT STYLES -->
+    <style>
+        .about {
+            background: var(--background);
+        }
+
+        .about-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            gap: 65px;
+        }
+
+        .about-image {
+            position: relative;
+            min-height: 400px;
+            background: #ead9df;
+        }
+
+        .about-image img {
+            width: 100%;
+            height: 450px;
+            object-fit: cover;
+        }
+
+        .about-image-label {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.94);
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .about-image-label span,
+        .about-eyebrow,
+        .services-eyebrow,
+        .contact-eyebrow {
+            color: var(--primary);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 3px;
+        }
+
+        .about-image-label strong {
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 20px;
+        }
+
+        .about-content h2,
+        .contact-content h2 {
+            margin: 15px 0 25px;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(32px, 4vw, 46px);
+            line-height: 1.2;
+            font-weight: 500;
+        }
+
+        .about-content h2 span,
+        .contact-content h2 span {
+            display: block;
+            color: var(--primary);
+            font-style: italic;
+        }
+
+        .about-content > p:not(.about-eyebrow) {
+            color: var(--muted);
+            font-size: 15px;
+            line-height: 1.9;
+            margin-bottom: 18px;
+        }
+
+        .about-content .btn {
+            margin-top: 10px;
+        }
+
+        .services {
+            background: #f9edf1;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 20px;
+        }
+
+        .service-card {
+            background: var(--white);
+            padding: 30px 22px;
+            border: 1px solid #f0e4e8;
+            transition: transform 0.3s ease,
+                        box-shadow 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(60, 20, 35, 0.08);
+        }
+
+        .service-icon {
+            color: var(--primary);
+            font-size: 30px;
+            margin-bottom: 18px;
+        }
+
+        .service-card h3 {
+            color: var(--primary);
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 20px;
+            font-weight: 500;
+            margin-bottom: 12px;
+        }
+
+        .service-card p {
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.8;
+        }
+
+        .contact {
+            background: var(--white);
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: 0.9fr 1.1fr;
+            gap: 60px;
+            align-items: start;
+        }
+
+        .contact-content > p:not(.contact-eyebrow) {
+            color: var(--muted);
+            line-height: 1.9;
+            margin-bottom: 25px;
+        }
+
+        .contact-detail {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            padding: 15px 0;
+            border-bottom: 1px solid #f0e4e8;
+        }
+
+        .contact-detail strong {
+            color: var(--primary);
+            font-size: 13px;
+        }
+
+        .contact-detail span {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .contact-note {
+            margin-top: 20px;
+            font-size: 13px;
+        }
+
+        .contact-form {
+            padding: 35px;
+            background: var(--background);
+            border: 1px solid #f0e4e8;
+        }
+
+        .contact-form h3 {
+            color: var(--primary);
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 27px;
+            font-weight: 500;
+            margin-bottom: 25px;
+        }
+
+        .contact-form label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            margin: 18px 0 8px;
+        }
+
+        .contact-form input,
+        .contact-form select,
+        .contact-form textarea {
+            display: block;
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #dfcbd3;
+            border-radius: 4px;
+            background: var(--white);
+            color: var(--text);
+            font: inherit;
+            font-size: 14px;
+        }
+
+        .contact-form input:focus,
+        .contact-form select:focus,
+        .contact-form textarea:focus {
+            outline: 2px solid var(--secondary);
+            border-color: var(--primary);
+        }
+
+        .contact-form textarea {
+            resize: vertical;
+        }
+
+        .contact-submit {
+            margin-top: 22px;
+            width: 100%;
+        }
+
+        .form-notice {
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.7;
+            margin-top: 15px;
+        }
+
+        @media (max-width: 900px) {
+            .about-container,
+            .contact-container {
+                grid-template-columns: 1fr;
+                gap: 35px;
+            }
+
+            .about-image {
+                max-width: 600px;
+                width: 100%;
+            }
+
+            .services-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 500px) {
+            .about-image img {
+                height: 330px;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .service-card {
+                padding: 25px;
+            }
+
+            .contact-form {
+                padding: 22px;
+            }
+        }
+    </style>
+
+    <!-- WEBSITE FOOTER -->
+    <footer class="site-footer">
+        <div class="container">
+
+            <div class="footer-grid">
+
+                <!-- FOOTER BRAND -->
+                <div class="footer-brand">
+                    <a href="#home" class="footer-logo">
+                        <span>BIMBSY</span>
+                        <small>GLAM FASHION</small>
+                    </a>
+
+                    <p>
+                        Style, creativity and confidence in every stitch.
+                        Discover fashion designed to help you express yourself.
+                    </p>
+                </div>
+
+                <!-- QUICK LINKS -->
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <a href="#home">Home</a>
+                    <a href="#collections">Collections</a>
+                    <a href="#about">About Us</a>
+                    <a href="#services">Our Services</a>
+                    <a href="#contact">Contact</a>
+                </div>
+
+                <!-- COLLECTION LINKS -->
+                <div class="footer-column">
+                    <h3>Explore</h3>
+                    <a href="#collections">Women's Wear</a>
+                    <a href="#collections">Corporate Wear</a>
+                    <a href="#services">Custom Tailoring</a>
+                    <a href="#services">Accessories</a>
+                    <a href="#services">Fashion Illustration</a>
+                </div>
+
+                <!-- CONTACT -->
+                <div class="footer-column">
+                    <h3>Get in Touch</h3>
+                    <p>Lagos, Nigeria</p>
+                    <a href="#contact">Send an Enquiry</a>
+                    <p>Follow us on social media</p>
+
+                    <!-- Replace # with your real social media URLs -->
+                    <div class="footer-socials">
+                        <a href="#" aria-label="Instagram">Instagram</a>
+                        <a href="#" aria-label="Facebook">Facebook</a>
+                        <a href="#" aria-label="TikTok">TikTok</a>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="footer-bottom">
+                <p>
+                    &copy; <span id="currentYear"></span>
+                    Bimbsy Glam Fashion. All rights reserved.
+                </p>
+
+                <a href="#home" class="back-to-top">
+                    Back to Top &uarr;
+                </a>
+            </div>
+
         </div>
-      </article>
-    </div>
-    <p class="note" style="text-align:center;margin-top:25px">
-      Note: These are sample inspiration photographs, not representations of completed Bimbsy Glam Fashion orders.
-    </p>
-  </div>
-</section>
+    </footer>
 
-<section class="services" id="services">
-  <div class="container">
-    <div class="section-heading">
-      <div class="eyebrow">More Than Outfits</div>
-      <h2>Our Services</h2>
-      <p>Have an idea or a project? You can hire Bimbsy Glam Fashion for custom fashion work.</p>
-    </div>
+    <!-- FOOTER STYLES -->
+    <style>
+        .site-footer {
+            background: #29151f;
+            color: #f9edf1;
+            padding: 65px 0 0;
+        }
 
-    <div class="service-grid">
-      <article class="service">
-        <div class="symbol">✂️</div>
-        <h3>Tailoring Commissions</h3>
-        <p>Hire us to sew custom garments, fashion samples and outfits based on your measurements and design brief.</p>
-        <a class="text-link" href="#contact" onclick="chooseService('Tailoring Commissions')">Discuss a sewing project →</a>
-      </article>
-      <article class="service">
-        <div class="symbol">✏️</div>
-        <h3>Fashion Sketching & Illustration</h3>
-        <p>Have a design in mind? Hire us to turn your fashion idea into a sketch or illustration.</p>
-        <a class="text-link" href="#contact" onclick="chooseService('Fashion Sketching & Illustration')">Request a sketch →</a>
-      </article>
-      <article class="service">
-        <div class="symbol">✨</div>
-        <h3>Beading & Garment Finishing</h3>
-        <p>Enquire about decorative finishing, beading and the details that make a garment feel complete.</p>
-        <a class="text-link" href="#contact" onclick="chooseService('Beading & Garment Finishing')">Discuss finishing →</a>
-      </article>
-    </div>
-  </div>
-</section>
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.4fr 1fr 1fr 1fr;
+            gap: 35px;
+            padding-bottom: 45px;
+        }
 
-<section id="about">
-  <div class="container about-grid">
-    <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=900&q=80" alt="Fashion design workspace inspiration" loading="lazy">
-    <div>
-      <div class="eyebrow">Our Story</div>
-      <h2>Made With Care. Styled With Confidence.</h2>
-      <p>
-        Bimbsy Glam Fashion is a Lagos-based fashion brand focused on ready-to-wear
-        clothing, custom sewing, accessories and creative fashion services.
-      </p>
-      <p>
-        Our goal is to help customers express their personal style while offering
-        thoughtful craftsmanship and a personal approach to each enquiry.
-      </p>
-      <ul class="checks">
-        <li>Ready-to-wear fashion enquiries</li>
-        <li>Custom sewing and tailoring commissions</li>
-        <li>Fashion sketching and illustration</li>
-        <li>Kidswear and occasion accessories</li>
-      </ul>
-      <a class="btn" href="#contact">Let's Discuss Your Idea</a>
-    </div>
-  </div>
-</section>
+        .footer-logo {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
 
-<section style="background:#fff">
-  <div class="container">
-    <div class="section-heading">
-      <div class="eyebrow">Simple & Personal</div>
-      <h2>How To Order</h2>
-      <p>Tell us what you need, and we'll discuss the details with you.</p>
-    </div>
-    <div class="steps">
-      <article class="step"><b>01</b><h3>Send Your Enquiry</h3><p>Choose a service and describe the outfit, sketch or accessory you want.</p></article>
-      <article class="step"><b>02</b><h3>Discuss Details</h3><p>We'll discuss measurements, budget, materials, availability and timeline.</p></article>
-      <article class="step"><b>03</b><h3>Confirm Your Order</h3><p>Work begins after the agreed scope, price and delivery timeline are confirmed.</p></article>
-    </div>
-  </div>
-</section>
+        .footer-logo span {
+            font-size: 27px;
+            font-weight: 800;
+            letter-spacing: 3px;
+            color: #f0c5d5;
+        }
 
-<section class="contact" id="contact">
-  <div class="container">
-    <div class="section-heading">
-      <div class="eyebrow" style="color:#f0d5b0">Let's Create Something Beautiful</div>
-      <h2>Contact & Enquiries</h2>
-      <p>Complete the form and continue on WhatsApp to discuss your request.</p>
-    </div>
+        .footer-logo small {
+            font-size: 10px;
+            letter-spacing: 4px;
+            margin-top: 5px;
+        }
 
-    <div class="contact-grid">
-      <div class="contact-info">
-        <h3>We'd Love To Hear From You</h3>
-        <p>📍 Lagos, Nigeria</p>
-        <p>📱 WhatsApp: <a href="https://wa.me/2348163594103">+234 816 359 4103</a></p>
-        <p>✉️ Email: <a href="mailto:bimbsyglamfashion@gmail.com">bimbsyglamfashion@gmail.com</a></p>
-        <p>For custom sewing, fashion sketches, ready-to-wear enquiries and accessories, send us a message.</p>
-        <a class="btn" style="background:#168b51;border-color:#168b51" href="https://wa.me/2348163594103" target="_blank" rel="noopener">Chat on WhatsApp</a>
-      </div>
+        .footer-brand p,
+        .footer-column p {
+            color: #d6c2ca;
+            font-size: 13px;
+            line-height: 1.9;
+        }
 
-      <form id="enquiryForm">
-        <div class="form-grid">
-          <div class="field">
-            <label for="name">Your Name *</label>
-            <input id="name" name="name" required placeholder="Enter your name">
-          </div>
-          <div class="field">
-            <label for="phone">Phone Number *</label>
-            <input id="phone" name="phone" required inputmode="tel" placeholder="Your phone number">
-          </div>
-          <div class="field full">
-            <label for="service">What do you need? *</label>
-            <select id="service" name="service" required>
-              <option value="">Choose a service</option>
-              <option>Women's Ready-to-Wear</option>
-              <option>Corporate Wear</option>
-              <option>Kidswear</option>
-              <option>Fascinators & Gele</option>
-              <option>Bags & Accessories</option>
-              <option>Beading & Embellishment</option>
-              <option>Tailoring Commissions</option>
-              <option>Fashion Sketching & Illustration</option>
-              <option>Beading & Garment Finishing</option>
-              <option>Other Enquiry</option>
-            </select>
-          </div>
-          <div class="field">
-            <label for="size">Size / Child's Age (if relevant)</label>
-            <input id="size" name="size" placeholder="e.g. size 10 or age 5">
-          </div>
-          <div class="field">
-            <label for="budget">Your Budget (₦)</label>
-            <input id="budget" name="budget" placeholder="Your estimated budget">
-          </div>
-          <div class="field full">
-            <label for="deadline">Expected Date / Deadline</label>
-            <input id="deadline" name="deadline" placeholder="When do you need it?">
-          </div>
-          <div class="field full">
-            <label for="details">Tell Us About Your Request *</label>
-            <textarea id="details" name="details" required placeholder="Describe your outfit, sketch, fabric, quantity or idea..."></textarea>
-          </div>
-          <div class="field full">
-            <button class="btn" type="submit">Send Enquiry on WhatsApp ↗</button>
-            <p class="note">This form opens WhatsApp with your details filled in. It does not take payment or automatically place a confirmed order.</p>
-          </div>
-        </div>
-      </form>
-    </div>
-  </div>
-</section>
-</main>
+        .footer-column {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 12px;
+        }
 
-<footer>
-  <strong>Bimbsy Glam Fashion</strong><br>
-  Wear Your Confidence · Lagos, Nigeria<br>
-  <span>© <span id="year"></span> Bimbsy Glam Fashion. All rights reserved.</span>
-</footer>
+        .footer-column h3 {
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 19px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #f0c5d5;
+        }
 
-<a class="whatsapp" href="https://wa.me/2348163594103" target="_blank" rel="noopener" aria-label="Chat with Bimbsy Glam Fashion on WhatsApp">WhatsApp ✆</a>
+        .footer-column > a {
+            color: #d6c2ca;
+            font-size: 13px;
+            transition: color 0.3s ease;
+        }
 
-<script>
-function toggleMenu() {
-  document.getElementById("navLinks").classList.toggle("open");
-}
-function closeMenu() {
-  document.getElementById("navLinks").classList.remove("open");
-}
-function chooseService(service) {
-  document.getElementById("service").value = service;
-}
-document.getElementById("year").textContent = new Date().getFullYear();
+        .footer-column > a:hover,
+        .footer-socials a:hover,
+        .back-to-top:hover {
+            color: #ffffff;
+        }
 
-document.getElementById("enquiryForm").addEventListener("submit", function(event) {
-  event.preventDefault();
+        .footer-socials {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
 
-  const name = document.getElementById("name").value.trim();
-  const phone = document.getElementById("phone").value.trim();
-  const service = document.getElementById("service").value;
-  const size = document.getElementById("size").value.trim() || "Not specified";
-  const budget = document.getElementById("budget").value.trim() || "Not specified";
-  const deadline = document.getElementById("deadline").value.trim() || "Not specified";
-  const details = document.getElementById("details").value.trim();
+        .footer-socials a {
+            color: #f0c5d5;
+            font-size: 12px;
+        }
 
-  const message =
-`Hello Bimbsy Glam Fashion! I would like to make an enquiry.
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            border-top: 1px solid #513644;
+            padding: 22px 0;
+        }
 
-Name: ${name}
-Phone: ${phone}
-Service: ${service}
-Size / Age: ${size}
-Budget: ${budget}
-Deadline: ${deadline}
+        .footer-bottom p {
+            color: #d6c2ca;
+            font-size: 12px;
+        }
 
-Request details:
-${details}`;
+        .back-to-top {
+            color: #f0c5d5;
+            font-size: 12px;
+            font-weight: 600;
+        }
 
-  window.open(
-    "https://wa.me/2348163594103?text=" + encodeURIComponent(message),
-    "_blank"
-  );
-});
-</script>
+        @media (max-width: 850px) {
+            .footer-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 35px 25px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .site-footer {
+                padding-top: 45px;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .footer-bottom {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 12px;
+            }
+        }
+    </style>
+
+    <!-- WEBSITE JAVASCRIPT -->
+    <script>
+        // MOBILE NAVIGATION MENU
+        const menuToggle = document.getElementById("menuToggle");
+        const mainNavigation = document.getElementById("mainNavigation");
+
+        if (menuToggle && mainNavigation) {
+            menuToggle.addEventListener("click", function () {
+                const isOpen = mainNavigation.classList.toggle("active");
+
+                menuToggle.setAttribute(
+                    "aria-expanded",
+                    String(isOpen)
+                );
+
+                menuToggle.setAttribute(
+                    "aria-label",
+                    isOpen
+                        ? "Close navigation menu"
+                        : "Open navigation menu"
+                );
+            });
+
+            // CLOSE THE MENU AFTER A NAVIGATION LINK IS CLICKED
+            const navigationLinks =
+                mainNavigation.querySelectorAll("a");
+
+            navigationLinks.forEach(function (link) {
+                link.addEventListener("click", function () {
+                    mainNavigation.classList.remove("active");
+
+                    menuToggle.setAttribute(
+                        "aria-expanded",
+                        "false"
+                    );
+
+                    menuToggle.setAttribute(
+                        "aria-label",
+                        "Open navigation menu"
+                    );
+                });
+            });
+
+            // CLOSE THE MENU WHEN THE SCREEN BECOMES WIDE
+            window.addEventListener("resize", function () {
+                if (window.innerWidth > 850) {
+                    mainNavigation.classList.remove("active");
+
+                    menuToggle.setAttribute(
+                        "aria-expanded",
+                        "false"
+                    );
+
+                    menuToggle.setAttribute(
+                        "aria-label",
+                        "Open navigation menu"
+                    );
+                }
+            });
+        }
+
+        // AUTOMATIC COPYRIGHT YEAR
+        const currentYear = document.getElementById("currentYear");
+
+        if (currentYear) {
+            currentYear.textContent = new Date().getFullYear();
+        }
+
+        // CONTACT FORM PLACEHOLDER HANDLER
+        // This demo handler does not send or store enquiries.
+        const contactForm = document.getElementById("contactForm");
+        const formNotice = document.getElementById("formNotice");
+
+        if (contactForm && formNotice) {
+            contactForm.addEventListener("submit", function (event) {
+                event.preventDefault();
+
+                formNotice.textContent =
+                    "Your form is not connected yet. Please contact " +
+                    "the business directly until a submission service is configured.";
+            });
+        }
+    </script>
+
 </body>
-  </html>
+</html>
+
