@@ -1,0 +1,16 @@
+{
+  "name": "Bimbsy Glam Fashion",
+  "short_name": "Bimbsy Glam",
+  "description": "Elegance in Every Stitch. Ready-to-wear and custom-made fashion from Lagos.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#FFFFFF",
+  "theme_color": "#6D1837",
+  "icons": [
+    {"src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
+    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"},
+    {"src": "maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+  ]
+}
