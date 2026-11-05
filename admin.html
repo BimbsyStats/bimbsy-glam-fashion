@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#6D1837"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="apple-touch-icon" href="apple-touch-icon.png">
+<title>Admin | Bimbsy Glam Fashion</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<style>
+:root{--iv:#FBF6EC;--cr:#FFFDF8;--bg:#6D1837;--gd:#B8893A;--em:#1F5C4A;--ink:#2A1F22;--mu:#5E5055;--ln:#E3D3BC;color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--iv);color:var(--ink);font:15px/1.5 system-ui,sans-serif}
+h1{font-family:Georgia,serif;font-size:26px;margin:0}
+button,input,select,textarea{font:inherit}
+header{display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;align-items:center;padding:10px 16px;background:var(--bg);color:var(--iv)}
+header .btn.o{background:none;color:var(--iv);border-color:var(--iv);min-height:38px}
+.w{max-width:720px;margin:auto;padding:16px}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:0 20px;border:1px solid var(--bg);border-radius:4px;background:var(--bg);color:var(--iv);font-weight:500;cursor:pointer}
+.btn.o{background:none;color:var(--bg)}.btn.d{background:none;color:#9B1C1C;border-color:#9B1C1C;width:100%;margin-top:12px}
+input,select,textarea{width:100%;min-height:46px;border:1px solid #CDBBA0;background:var(--cr);border-radius:4px;padding:0 12px;color:var(--ink)}
+textarea{padding:10px 12px;min-height:90px}
+input[type=checkbox]{width:auto;min-height:0;margin-right:8px}input[type=file]{padding:10px}
+label{display:block;font-size:12px;color:var(--mu);margin:12px 0 4px}label.ck{font-size:15px;color:var(--ink)}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.sp{justify-content:space-between}
+.item{display:flex;gap:12px;align-items:center;padding:12px;margin-top:10px;background:var(--cr);border:1px solid var(--ln);border-radius:4px;cursor:pointer}
+.th{width:56px;height:72px;background:#E8D8C4;border-radius:4px;overflow:hidden;flex:none}.th img,.pt img{width:100%;height:100%;object-fit:cover;display:block}
+.pill{font-size:12px;padding:2px 10px;border-radius:12px;background:#eee;color:var(--mu)}.pill.on{background:#DCEFE6;color:var(--em)}
+.mu{color:var(--mu);font-size:13px}.err{color:#9B1C1C}
+.sg{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.sg label{margin-top:0}
+#ph{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px}.pt{width:104px}.pt img{height:130px;border-radius:4px}
+.chip{border:1px solid var(--gd);background:none;border-radius:16px;min-height:34px;padding:0 10px;font-size:12px;margin-top:4px;color:var(--ink)}
+.toast{position:fixed;left:16px;right:16px;bottom:24px;background:var(--ink);color:#fff;padding:12px 16px;border-radius:6px;z-index:9}
+@media print{header,.noprint,.toast{display:none!important}body{background:#fff}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+const SB_URL='https://dtkfguvwgbcjoqdohrcc.supabase.co',SB_KEY='sb_publishable_QFtew5s6KYE3PS4LWIQ24Q_0phfDh6r';
+const SZ=['6','8','10','12','14','One size'];
+const $=s=>document.querySelector(s),app=$('#app');
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const money=n=>'₦'+Number(n).toLocaleString('en-NG');
+const toast=m=>{const t=document.createElement('div');t.className='toast';t.textContent=m;document.body.append(t);setTimeout(()=>t.remove(),3000)};
+let sb,cats=[],prods=[],ords=[],edit=null;
+const STG={order_confirmed:'Order confirmed',processing:'Processing',packed:'Packed',dispatched:'Dispatched',out_for_delivery:'Out for delivery',delivered:'Delivered'};
+const catName=s=>(cats.find(c=>c.slug===s)||{}).name||s;
+const total=p=>Object.values(p.stock||{}).reduce((a,b)=>a+b,0);
+async function start(){
+  if(!window.supabase){app.innerHTML='<div class="w"><p class="err">The page could not load its tools. Check your internet connection and reload.</p></div>';return}
+  sb=supabase.createClient(SB_URL,SB_KEY);
+  const {data:{session}}=await sb.auth.getSession();session?gate():loginV()}
+function loginV(msg){app.innerHTML=`<div class="w" style="max-width:380px;margin-top:40px"><h1>Admin sign in</h1><p class="mu">Bimbsy Glam Fashion store</p><form onsubmit="return login(event)"><label for="e">Email</label><input id="e" type="email" autocomplete="username" required><label for="p">Password</label><input id="p" type="password" autocomplete="current-password" required><button class="btn" style="width:100%;margin-top:16px">Sign in</button></form><p class="err">${esc(msg||'')}</p></div>`}
+async function login(e){e.preventDefault();const {error}=await sb.auth.signInWithPassword({email:$('#e').value.trim(),password:$('#p').value});error?loginV(error.message):gate();return false}
+async function gate(){const {data:{user}}=await sb.auth.getUser();const {data}=await sb.from('admins').select('user_id').eq('user_id',user.id).maybeSingle();
+  if(!data){await sb.auth.signOut();return loginV('This account is not an admin.')}
+  await load();list()}
+async function out(){await sb.auth.signOut();loginV()}
+async function load(){const a=await sb.from('categories').select('*').order('sort_order');const b=await sb.from('products').select('*').order('created_at',{ascending:false});
+  if(a.error||b.error)return toast((a.error||b.error).message);cats=a.data;prods=b.data}
+const bar=back=>`<header><b>Bimbsy Glam · Admin</b><div class="row" style="gap:6px">${back?`<button class="btn o" onclick="${back===1?'list':back}()">← Back</button>`:'<button class="btn o" onclick="list()">Products</button><button class="btn o" onclick="ordList()">Orders</button><button class="btn o" onclick="msgList()">Messages</button><button class="btn o" onclick="out()">Sign out</button>'}</div></header>`;
+function list(){app.innerHTML=`${bar()}<div class="w"><div class="row sp"><h1>Products (${prods.length})</h1><button class="btn" onclick="editForm()">+ Add product</button></div>${prods.length?prods.map(p=>`<div class="item" onclick="editForm('${p.id}')"><div class="th">${p.image_urls[0]?`<img src="${esc(p.image_urls[0])}" alt="">`:''}</div><div style="flex:1"><div>${esc(p.name)}</div><div class="mu">${esc(catName(p.category))} · ${money(p.price_ngn)}</div><div class="mu">${p.made_to_order?'Made to order':total(p)+' in stock'}</div></div><span class="pill ${p.active?'on':''}">${p.active?'Active':'Hidden'}</span></div>`).join(''):'<p class="mu">No products yet. Tap “Add product”.</p>'}</div>`}
+function editForm(id){
+  edit=id?JSON.parse(JSON.stringify(prods.find(p=>p.id===id))):{name:'',category:cats[0]?.slug,description:'',price_ngn:'',colors:[],stock:{},image_urls:[],active:true,made_to_order:false};
+  edit.gone=[];edit.colour_images=edit.colour_images||{};
+  app.innerHTML=`${bar(1)}<div class="w"><h1>${id?'Edit':'Add'} product</h1><form onsubmit="return save(event)">
+<label for="n">Name</label><input id="n" required value="${esc(edit.name)}">
+<label for="c">Category</label><select id="c">${cats.map(c=>`<option value="${c.slug}" ${c.slug===edit.category?'selected':''}>${esc(c.name)}</option>`).join('')}</select>
+<label for="d">Description</label><textarea id="d">${esc(edit.description)}</textarea>
+<label for="pr">Price (₦)</label><input id="pr" type="number" min="0" step="1" inputmode="numeric" required value="${esc(edit.price_ngn)}">
+<label for="co">Colours (separate with commas)</label><input id="co" oninput="cph()" placeholder="Navy, Burgundy, Emerald" value="${esc(edit.colors.join(', '))}">
+<label>Stock per size (leave empty if the size is not offered)</label><div class="sg">${SZ.map(s=>`<div><label>${s}</label><input type="number" min="0" inputmode="numeric" data-s="${s}" value="${esc(edit.stock[s])}"></div>`).join('')}</div>
+<label class="ck"><input type="checkbox" id="a" ${edit.active?'checked':''}>Active (visible in the shop)</label>
+<label class="ck"><input type="checkbox" id="m" ${edit.made_to_order?'checked':''}>Made to order (no stock needed)</label>
+<label>Photos (the first photo is the main one)</label><div id="ph"></div><input type="file" id="f" accept="image/*" multiple onchange="up(this)">
+<label>Photos for each colour (optional). When a customer picks a colour, these photos show.</label><div id="cph"></div>
+<button class="btn" style="width:100%;margin-top:16px" type="submit">Save product</button></form>${id?`<button class="btn d" onclick="del('${id}')">Delete product</button>`:''}</div>`;
+  photos();cph()}
+function photos(){$('#ph').innerHTML=edit.image_urls.map((u,i)=>`<div class="pt"><img src="${esc(u)}" alt=""><div class="row" style="gap:4px"><button type="button" class="chip" onclick="mv(${i})">${i?'Make main':'Main'}</button><button type="button" class="chip" onclick="rm(${i})">Remove</button></div></div>`).join('')||'<p class="mu">No photos yet.</p>'}
+const pth=u=>u.split('/product-images/')[1];
+function rm(i){edit.gone.push(pth(edit.image_urls[i]));edit.image_urls.splice(i,1);photos()}
+function mv(i){if(i){edit.image_urls.unshift(edit.image_urls.splice(i,1)[0]);photos()}}
+async function shrink(f){const b=await createImageBitmap(f),r=Math.min(1,1400/Math.max(b.width,b.height)),c=document.createElement('canvas');c.width=Math.round(b.width*r);c.height=Math.round(b.height*r);c.getContext('2d').drawImage(b,0,0,c.width,c.height);return new Promise(ok=>c.toBlob(ok,'image/jpeg',.85))}
+async function up(inp){for(const f of inp.files){toast('Uploading photo…');try{const b=await shrink(f),path='products/'+Date.now()+'-'+Math.random().toString(36).slice(2,7)+'.jpg';
+  const {error}=await sb.storage.from('product-images').upload(path,b,{contentType:'image/jpeg'});if(error){toast(error.message);continue}
+  edit.image_urls.push(sb.storage.from('product-images').getPublicUrl(path).data.publicUrl)}catch(x){toast('Could not read that photo')}}
+  inp.value='';photos();toast('Photo added. Tap Save product.')}
+function cph(){const el=$('#cph');if(!el)return;const cl=$('#co').value.split(',').map(s=>s.trim()).filter(Boolean);
+el.innerHTML=cl.length?cl.map(c=>`<div class="item" style="cursor:default;display:block"><b>${esc(c)}</b><div class="row" style="margin:8px 0">${(edit.colour_images[c]||[]).map((u,i)=>`<div class="pt" style="width:72px"><img src="${esc(u)}" alt="" style="height:90px"><button type="button" class="chip" onclick="crm(this.dataset.c,${i})" data-c="${esc(c)}">Remove</button></div>`).join('')}</div><input type="file" accept="image/*" multiple onchange="cup(this,this.dataset.c)" data-c="${esc(c)}"></div>`).join(''):'<p class="mu">Type the colours above first.</p>'}
+function crm(c,i){edit.gone.push(pth(edit.colour_images[c][i]));edit.colour_images[c].splice(i,1);cph()}
+async function cup(inp,c){for(const f of inp.files){toast('Uploading photo…');try{const b=await shrink(f),path='products/'+Date.now()+'-'+Math.random().toString(36).slice(2,7)+'.jpg';const {error}=await sb.storage.from('product-images').upload(path,b,{contentType:'image/jpeg'});if(error){toast(error.message);continue}(edit.colour_images[c]=edit.colour_images[c]||[]).push(sb.storage.from('product-images').getPublicUrl(path).data.publicUrl)}catch(x){toast('Could not read that photo')}}inp.value='';cph();toast('Photo added. Tap Save product.')}
+async function save(e){e.preventDefault();const stock={};document.querySelectorAll('[data-s]').forEach(i=>{if(i.value!=='')stock[i.dataset.s]=parseInt(i.value)});
+  const cl=$('#co').value.split(',').map(s=>s.trim()).filter(Boolean);
+  const row={colour_images:Object.fromEntries(Object.entries(edit.colour_images||{}).filter(([k,v])=>cl.includes(k)&&v.length)),name:$('#n').value.trim(),category:$('#c').value,description:$('#d').value.trim(),price_ngn:parseInt($('#pr').value),colors:$('#co').value.split(',').map(s=>s.trim()).filter(Boolean),stock,image_urls:edit.image_urls,active:$('#a').checked,made_to_order:$('#m').checked};
+  const r=edit.id?await sb.from('products').update(row).eq('id',edit.id):await sb.from('products').insert(row);
+  if(r.error){toast(r.error.message);return false}
+  if(edit.gone.length)sb.storage.from('product-images').remove(edit.gone);
+  toast('Saved');await load();list();return false}
+async function del(id){if(!confirm('Delete this product? This cannot be undone.'))return;const p=prods.find(x=>x.id===id);
+  const r=await sb.from('products').delete().eq('id',id);if(r.error)return toast(r.error.message);
+  if(p.image_urls.length)sb.storage.from('product-images').remove(p.image_urls.map(pth));
+  toast('Deleted');await load();list()}
+const box='class="item" style="cursor:default;display:block"';
+async function ordList(){const r=await sb.from('orders').select('*').order('created_at',{ascending:false}).limit(100);if(r.error)return toast(r.error.message);ords=r.data;
+app.innerHTML=`${bar()}<div class="w"><h1>Orders (${ords.length})</h1>${ords.length?ords.map(o=>`<div class="item" onclick="ordView('${o.id}')"><div style="flex:1"><div><b>${esc(o.ref)}</b> · ${esc(o.customer_name)}</div><div class="mu">${money(o.total_ngn)} · ${new Date(o.created_at).toLocaleString('en-NG')}</div><div class="mu">${STG[o.delivery_status]||o.delivery_status}</div></div><span class="pill ${o.payment_status==='paid'?'on':''}">${o.status==='cancelled'?'Cancelled':o.payment_status==='paid'?'Paid':'Awaiting payment'}</span></div>`).join(''):'<p class="mu">No orders yet.</p>'}</div>`}
+async function ordView(id){const o=ords.find(x=>x.id===id),h=await sb.from('order_status_history').select('*').eq('order_id',id).order('created_at'),hist=h.data||[],d=o.status==='cancelled'?'disabled':'';
+const wa=String(o.phone).replace(/\D/g,'').replace(/^0/,'234');
+app.innerHTML=`${bar('ordList')}<div class="w"><h1>${esc(o.ref)}</h1><p class="mu">${new Date(o.created_at).toLocaleString('en-NG')}${o.status==='cancelled'?' · CANCELLED':''}</p>
+<div ${box}><b>Items</b>${o.items.map(l=>`<div class="row sp"><span>${l.qty} × ${esc(l.name)} <span class="mu">(${esc(l.color||'')}, ${esc(l.size)})</span></span><span>${money(l.line_total)}</span></div>`).join('')}<div class="row sp mu"><span>Subtotal</span><span>${money(o.subtotal)}</span></div><div class="row sp mu"><span>Delivery</span><span>${money(o.delivery_fee)}</span></div><div class="row sp"><b>Total</b><b>${money(o.total_ngn)}</b></div></div>
+<div ${box}><b>Customer</b><div>${esc(o.customer_name)}</div><div><a href="tel:${esc(o.phone)}">${esc(o.phone)}</a> · <a target="_blank" rel="noopener" href="https://wa.me/${wa}">WhatsApp</a></div><div>${esc(o.email||'')}</div><div class="mu">${esc(o.address)}, ${esc(o.city)}, ${esc(o.state)} ${esc(o.postal_code||'')}</div>${o.note?`<div class="mu">Note: ${esc(o.note)}</div>`:''}</div>
+<div ${box}><b>Payment: ${o.payment_status==='paid'?'Paid':'Awaiting payment'} (${esc(o.payment_method)})</b><p class="mu">Only mark as received after you see the money in your bank account.</p>${o.payment_method==='bank_transfer'?`<div class="row"><button class="btn" ${d} onclick="setPay('${o.id}','paid')">Mark payment received</button><button class="btn o" ${d} onclick="setPay('${o.id}','awaiting_payment')">Not received</button></div>`:'<p class="mu"><b>Paystack payments are confirmed automatically and cannot be changed here.</b></p>'}</div>
+<div ${box}><b>Delivery</b><label>Stage</label><select id="ds">${Object.entries(STG).map(([k,v])=>`<option value="${k}" ${k===o.delivery_status?'selected':''}>${v}</option>`).join('')}</select><label>Note (optional)</label><input id="dn"><label>Courier</label><input id="dc" value="${esc(o.courier_name||'')}"><label>Tracking number</label><input id="dt" value="${esc(o.tracking_number||'')}"><label>Tracking link</label><input id="du" value="${esc(o.tracking_url||'')}"><label>Rider phone</label><input id="dr" value="${esc(o.rider_phone||'')}"><label>Estimated delivery</label><input id="de" value="${esc(o.estimated_delivery||'')}"><button class="btn" style="width:100%;margin-top:12px" ${d} onclick="setDel('${o.id}')">Update delivery</button></div>
+<div ${box}><b>Documents</b><div class="row"><button class="btn o" onclick="admDoc('${o.id}','invoice')">Invoice</button>${o.payment_status==='paid'?`<button class="btn o" onclick="admDoc('${o.id}','receipt')">Receipt</button>`:''}</div></div>
+<div ${box}><b>History</b>${hist.map(x=>`<div class="mu">${new Date(x.created_at).toLocaleString('en-NG')} · ${esc(STG[x.stage]||x.stage)}${x.note?' · '+esc(x.note):''}</div>`).join('')}</div>
+${o.status==='cancelled'?'':`<button class="btn d" onclick="cancelOrd('${o.id}')">Cancel order and restore stock</button>`}</div>`}
+async function reloadOrd(id){const r=await sb.from('orders').select('*').order('created_at',{ascending:false}).limit(100);ords=r.data||[];ordView(id)}
+async function setPay(id,s){const r=await sb.rpc('admin_set_payment',{p_order:id,p_status:s});if(r.error)return toast(r.error.message);toast('Payment updated');reloadOrd(id)}
+async function setDel(id){const r=await sb.rpc('admin_set_delivery',{p_order:id,p_stage:$('#ds').value,p_note:$('#dn').value,p_courier:$('#dc').value,p_tracking:$('#dt').value,p_url:$('#du').value,p_rider:$('#dr').value,p_eta:$('#de').value});if(r.error)return toast(r.error.message);toast('Delivery updated');reloadOrd(id)}
+async function cancelOrd(id){if(!confirm('Cancel this order and put its items back in stock?'))return;const r=await sb.rpc('admin_cancel_order',{p_order:id});if(r.error)return toast(r.error.message);toast('Order cancelled');reloadOrd(id)}
+const LOGO='data:image/png;base64,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';
+function docHTML(kind,d){const o=d.order,b=d.business||{},rc=d.receipt,inv=d.invoice,R=kind==='receipt';
+const rows=o.items.map(l=>`<tr><td style="padding:6px 0">${esc(l.name)}<br><span style="color:#5E5055;font-size:12px">${esc(l.color||'')}, ${esc(l.size)}</span></td><td style="text-align:right">${l.qty}</td><td style="text-align:right">${money(l.unit_price)}</td><td style="text-align:right">${money(l.line_total)}</td></tr>`).join('');
+const h3='<h3 style="font-size:20px;margin:18px 0 6px">';let pay='';
+if(R){const m=rc.method==='paystack'?'Paystack (online)':'Bank transfer',fee=rc.charged_kobo>rc.amount*100?Math.round((rc.charged_kobo-rc.amount*100)/100):0;
+pay=`${h3}Payment</h3><div>Method: ${m}</div><div>Payment reference: ${esc(rc.reference||'')}</div><div>Amount paid for order: <b>${money(rc.amount)}</b></div>${fee?`<div>Paystack processing fee: ${money(fee)}</div><div>Total charged: ${money(rc.amount+fee)}</div>`:''}<div>Date paid: ${new Date(rc.paid_at).toLocaleString('en-NG')}</div>`}
+else pay=`${h3}Payment instructions</h3>${d.bank&&d.bank.account_number?`<div>Bank transfer to ${esc(d.bank.bank)}, ${esc(d.bank.account_name)}, <b>${esc(d.bank.account_number)}</b></div><div>Use ${esc(o.ref)} as the payment reference.</div>`:'<div>Pay online with Paystack, or contact us on WhatsApp.</div>'}<p style="margin-top:14px"><b>This invoice is not proof of payment.</b> A receipt is issued only after payment is confirmed.</p>`;
+const logo=typeof LOGO!=='undefined'?LOGO:'';
+return `<div style="background:#fff;color:#2A1F22;padding:20px;border:1px solid #E3D3BC;border-radius:4px;max-width:720px;margin:auto;font-size:14px;line-height:1.5"><div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap"><div>${logo?`<img src="${logo}" alt="" style="height:56px;display:block">`:''}<b>${esc(b.name||'Bimbsy Glam Fashion')}</b><div>${b.address?esc(b.address)+', ':''}${esc(b.city||'Lagos')}, ${esc(b.country||'Nigeria')}</div><div>${esc(b.email||'')}</div></div><div style="text-align:right"><div style="font-family:Georgia,serif;font-size:28px;color:#6D1837">${R?'RECEIPT':'INVOICE'}</div><div><b>${esc(R?rc.receipt_number:inv.invoice_number)}</b></div><div>Date: ${new Date(R?rc.issued_at:inv.issued_at).toLocaleDateString('en-NG')}</div><div>Order: ${esc(o.ref)}</div>${R?`<div>Invoice: ${esc(inv.invoice_number)}</div><div style="color:#1F5C4A"><b>PAID</b></div>`:''}</div></div>${h3}Customer</h3><div>${esc(o.name)}</div><div>${esc(o.phone)}${o.email?' · '+esc(o.email):''}</div><div>${esc(o.address)}, ${esc(o.city)}, ${esc(o.state)}${o.postal_code?' '+esc(o.postal_code):''}, ${esc(o.country)}</div><table style="width:100%;border-collapse:collapse;margin-top:14px"><tr style="border-bottom:1px solid #E3D3BC;text-align:left"><th>Item</th><th style="text-align:right">Qty</th><th style="text-align:right">Price</th><th style="text-align:right">Total</th></tr>${rows}</table><div style="text-align:right;margin-top:10px"><div>Subtotal: ${money(o.subtotal)}</div><div>Delivery: ${money(o.delivery_fee)}</div><div style="font-size:18px"><b>Total: ${money(o.total)}</b> <span style="color:#5E5055">(${esc(o.currency)})</span></div></div>${pay}</div>`}
+let ADOC=null,AOID=null;
+async function admDoc(id,kind){const r=await sb.rpc('admin_order_docs',{p_order:id});if(r.error)return toast(r.error.message);ADOC=r.data;AOID=id;
+app.innerHTML=`${bar('ordBack')}<div class="w"><div class="row noprint" style="margin:12px 0"><button class="btn" onclick="window.print()">Print / Save as PDF</button></div>${docHTML(kind==='receipt'&&ADOC.receipt?'receipt':'invoice',ADOC)}</div>`}
+function ordBack(){ordView(AOID)}
+let msgs=[];
+async function msgList(){const r=await sb.from('contact_messages').select('*').order('created_at',{ascending:false}).limit(100);if(r.error)return toast(r.error.message);msgs=r.data;
+app.innerHTML=`${bar()}<div class="w"><h1>Messages (${msgs.length})</h1>${msgs.length?msgs.map(m=>`<div class="item" onclick="msgView('${m.id}')"><div style="flex:1"><div><b>${esc(m.subject||'(no subject)')}</b> · ${esc(m.name)}</div><div class="mu">${new Date(m.created_at).toLocaleString('en-NG')}</div></div><span class="pill ${m.status==='new'?'on':''}">${m.status==='new'?'New':'Read'}</span></div>`).join(''):'<p class="mu">No messages yet.</p>'}</div>`}
+async function msgView(id){const m=msgs.find(x=>x.id===id);if(m.status==='new'){await sb.from('contact_messages').update({status:'read'}).eq('id',id);m.status='read'}
+app.innerHTML=`${bar('msgList')}<div class="w"><h1>${esc(m.subject||'Message')}</h1><p class="mu">${esc(m.name)} · ${esc(m.email)} · ${new Date(m.created_at).toLocaleString('en-NG')}</p><div ${box}><div style="white-space:pre-wrap">${esc(m.message)}</div></div><a class="btn" style="width:100%;margin-top:12px" href="mailto:${esc(m.email)}?subject=${encodeURIComponent('Re: '+(m.subject||'Your message'))}">Reply by email</a><button class="btn d" onclick="msgDel('${m.id}')">Delete message</button></div>`}
+async function msgDel(id){if(!confirm('Delete this message?'))return;const r=await sb.from('contact_messages').delete().eq('id',id);if(r.error)return toast(r.error.message);toast('Deleted');msgList()}
+start();
+</script>
+<a href="index.html" style="position:fixed;left:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:50;background:#6D1837;color:#FBF6EC;padding:9px 14px;border-radius:20px;font:600 13px system-ui,sans-serif;text-decoration:none;box-shadow:0 2px 10px rgba(0,0,0,.25)">&larr; Back to store</a></body>
+</html>
