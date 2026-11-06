@@ -310,7 +310,7 @@ if(window.render)render();else tr();
 (function(){
 var P=document.getElementById('aiP'),B=document.getElementById('aiB'),M=document.getElementById('aiM'),F=document.getElementById('aiF'),I=document.getElementById('aiI'),H=[];
 try{H=JSON.parse(sessionStorage.bgChat||'[]')}catch(e){}
-function add(c,t){var d=document.createElement('div');d.className=c;d.textContent=t;M.appendChild(d);M.scrollTop=M.scrollHeight;return d}
+function add(c,t){var d=document.createElement('div');d.className=c;d.textContent=(c==='aib')?String(t).replace(/\*\*/g,'').replace(/^\s*\*\s/gm,'- '):t;M.appendChild(d);M.scrollTop=M.scrollHeight;return d}
 function draw(){M.innerHTML='';if(!H.length)add('aib','Hello! I am the Bimbsy Glam Fashion assistant. I can help with products, sizes, delivery and how to order. How can I help?');H.forEach(function(m){add(m.role==='user'?'aiu':'aib',m.content)})}
 var vm=false,sp=false,SR=window.SpeechRecognition||window.webkitSpeechRecognition,rec=null,LG={en:'en-NG',fr:'fr-FR',pt:'pt-BR',es:'es-ES',ar:'ar-SA',de:'de-DE',yo:'yo-NG',ko:'ko-KR'};
 var mic=document.getElementById('aiMic'),spk=document.getElementById('aiSp');
@@ -321,7 +321,7 @@ mic.onclick=function(){if(!SR)return;try{rec=new SR();rec.lang=LG[document.docum
 B.onclick=function(){P.style.display='flex';B.style.display='none';draw();I.focus()};
 document.getElementById('aiX').onclick=function(){P.style.display='none';B.style.display='block'};
 F.onsubmit=function(e){e.preventDefault();var t=I.value.trim();if(!t)return;I.value='';H.push({role:'user',content:t});add('aiu',t);var w=add('aib','…');
- fetch(SB+'/functions/v1/shop-assistant',{method:'POST',headers:{apikey:KEY,'Content-Type':'application/json'},body:JSON.stringify({messages:H.slice(-8),lang:document.documentElement.lang||'en'})})
+ fetch(SB+'/functions/v1/shop-assistant',{method:'POST',signal:(window.AbortSignal&&AbortSignal.timeout)?AbortSignal.timeout(25000):undefined,headers:{apikey:KEY,'Content-Type':'application/json'},body:JSON.stringify({messages:H.slice(-8),lang:document.documentElement.lang||'en'})})
  .then(function(r){return r.json()}).then(function(j){var a=j.reply||'Sorry, I could not answer that. Please message us on WhatsApp.';w.textContent=a;H.push({role:'assistant',content:a});if(vm||sp)speak(a);vm=false;try{sessionStorage.bgChat=JSON.stringify(H.slice(-12))}catch(e){}})
  .catch(function(){w.textContent='Sorry, the assistant is unavailable right now. Please message us on WhatsApp.';H.pop()});
  return false};
