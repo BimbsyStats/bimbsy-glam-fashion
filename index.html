@@ -305,18 +305,24 @@ if(window.render)render();else tr();
 #aiF{display:flex;gap:8px;padding:10px;border-top:1px solid #E3D3BC}#aiF input{flex:1;padding:10px;border:1px solid #E3D3BC;border-radius:6px;font-size:15px}
 #aiF button{background:#B8893A;border:0;border-radius:6px;padding:0 16px;font-weight:700;color:#2A1F22}#aiW{padding:6px 12px 10px;font-size:12px;color:#5E5055}#aiW a{color:#6D1837}</style>
 <button id="aiB" type="button" aria-label="Chat with our assistant">Chat with us</button>
-<div id="aiP" role="dialog" aria-label="Bimbsy Glam assistant"><header><b>Bimbsy Glam assistant</b><button type="button" id="aiX" style="background:none;border:0;color:#fff;font-size:22px" aria-label="Close">&times;</button></header><div id="aiM"></div><form id="aiF"><input id="aiI" maxlength="500" placeholder="Ask about sizes, delivery, orders…" autocomplete="off"><button type="submit">Send</button></form><div id="aiW">AI assistant. It can make mistakes. Please do not share your phone number or other personal details here. For orders and custom designs, <a href="https://wa.me/2348163594103" target="_blank" rel="noopener">talk to a person on WhatsApp</a>.</div></div>
+<div id="aiP" role="dialog" aria-label="Bimbsy Glam assistant"><header><b>Bimbsy Glam assistant</b><span><button type="button" id="aiSp" title="Read replies aloud" aria-label="Read replies aloud" style="background:none;border:0;font-size:18px;opacity:.6;color:#fff">🔊</button><button type="button" id="aiX" style="background:none;border:0;color:#fff;font-size:22px" aria-label="Close">&times;</button></span></header><div id="aiM"></div><form id="aiF"><input id="aiI" maxlength="500" placeholder="Ask about sizes, delivery, orders…" autocomplete="off"><button type="button" id="aiMic" title="Speak" aria-label="Speak your question" style="background:#F3E9D6;border:1px solid #B8893A;border-radius:6px;padding:0 12px;font-size:18px">🎤</button><button type="submit">Send</button></form><div id="aiW">AI assistant. It can make mistakes. Please do not share your phone number or other personal details here. For orders and custom designs, <a href="https://wa.me/2348163594103" target="_blank" rel="noopener">talk to a person on WhatsApp</a>.</div></div>
 <script>
 (function(){
 var P=document.getElementById('aiP'),B=document.getElementById('aiB'),M=document.getElementById('aiM'),F=document.getElementById('aiF'),I=document.getElementById('aiI'),H=[];
 try{H=JSON.parse(sessionStorage.bgChat||'[]')}catch(e){}
 function add(c,t){var d=document.createElement('div');d.className=c;d.textContent=t;M.appendChild(d);M.scrollTop=M.scrollHeight;return d}
 function draw(){M.innerHTML='';if(!H.length)add('aib','Hello! I am the Bimbsy Glam Fashion assistant. I can help with products, sizes, delivery and how to order. How can I help?');H.forEach(function(m){add(m.role==='user'?'aiu':'aib',m.content)})}
+var vm=false,sp=false,SR=window.SpeechRecognition||window.webkitSpeechRecognition,rec=null,LG={en:'en-NG',fr:'fr-FR',pt:'pt-BR',es:'es-ES',ar:'ar-SA',de:'de-DE',yo:'yo-NG',ko:'ko-KR'};
+var mic=document.getElementById('aiMic'),spk=document.getElementById('aiSp');
+function speak(t){try{if(!window.speechSynthesis)return;speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(t.replace(/https?:\/\/\S+/g,'').replace(/[*_#]/g,''));u.lang=LG[document.documentElement.lang]||'en-NG';speechSynthesis.speak(u)}catch(e){}}
+spk.onclick=function(){sp=!sp;spk.style.opacity=sp?1:.6;if(!sp&&window.speechSynthesis)speechSynthesis.cancel()};
+if(!SR)mic.style.display='none';
+mic.onclick=function(){if(!SR)return;try{rec=new SR();rec.lang=LG[document.documentElement.lang]||'en-NG';rec.interimResults=false;rec.onresult=function(e){I.value=e.results[0][0].transcript;vm=true;mic.textContent='🎤';F.requestSubmit?F.requestSubmit():F.onsubmit({preventDefault:function(){}})};rec.onerror=function(){mic.textContent='🎤'};rec.onend=function(){mic.textContent='🎤'};mic.textContent='🔴';rec.start()}catch(e){mic.textContent='🎤'}};
 B.onclick=function(){P.style.display='flex';B.style.display='none';draw();I.focus()};
 document.getElementById('aiX').onclick=function(){P.style.display='none';B.style.display='block'};
 F.onsubmit=function(e){e.preventDefault();var t=I.value.trim();if(!t)return;I.value='';H.push({role:'user',content:t});add('aiu',t);var w=add('aib','…');
  fetch(SB+'/functions/v1/shop-assistant',{method:'POST',headers:{apikey:KEY,'Content-Type':'application/json'},body:JSON.stringify({messages:H.slice(-8),lang:document.documentElement.lang||'en'})})
- .then(function(r){return r.json()}).then(function(j){var a=j.reply||'Sorry, I could not answer that. Please message us on WhatsApp.';w.textContent=a;H.push({role:'assistant',content:a});try{sessionStorage.bgChat=JSON.stringify(H.slice(-12))}catch(e){}})
+ .then(function(r){return r.json()}).then(function(j){var a=j.reply||'Sorry, I could not answer that. Please message us on WhatsApp.';w.textContent=a;H.push({role:'assistant',content:a});if(vm||sp)speak(a);vm=false;try{sessionStorage.bgChat=JSON.stringify(H.slice(-12))}catch(e){}})
  .catch(function(){w.textContent='Sorry, the assistant is unavailable right now. Please message us on WhatsApp.';H.pop()});
  return false};
 })();
