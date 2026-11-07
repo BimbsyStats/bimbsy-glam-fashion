@@ -168,9 +168,10 @@ const rows=o.items.map(l=>`<tr><td class="bgdc"><div class="bgdn">${esc(l.name)}
 let pay='';
 if(R){const m=rc.method==='paystack'?'Paystack (online)':'Bank transfer',fee=rc.charged_kobo>rc.amount*100?Math.round((rc.charged_kobo-rc.amount*100)/100):0;
 pay=`<div class="bgdl">Payment</div><div class="bgdbox"><div>Method: ${m}</div><div>Reference: ${esc(rc.reference||'')}</div><div>Amount paid for order: <b>${money(rc.amount)}</b></div>${fee?`<div>Paystack processing fee: ${money(fee)}</div><div>Total charged: ${money(rc.amount+fee)}</div>`:''}<div>Date paid: ${new Date(rc.paid_at).toLocaleString('en-NG')}</div></div>`}
+else if(rc)pay=`<div class="bgdl">Payment</div><div class="bgdbox"><div><b>Payment received.</b> Thank you!</div><div>Date paid: ${new Date(rc.paid_at).toLocaleDateString('en-NG')}</div><div>Your receipt number is <b>${esc(rc.receipt_number)}</b>. Open it from Track my order.</div></div>`;
 else pay=`<div class="bgdl">Payment instructions</div><div class="bgdbox">${d.bank&&d.bank.account_number?`<div>Bank transfer to ${esc(d.bank.bank)}, ${esc(d.bank.account_name)}</div><div class="bgdacc">${esc(d.bank.account_number)}</div><div>Use <b>${esc(o.ref)}</b> as the payment reference.</div>`:'<div>Pay online with Paystack, or contact us on WhatsApp.</div>'}</div><p class="bgdnote"><b>This invoice is not proof of payment.</b> A receipt is issued only after payment is confirmed.</p>`;
 const logo=typeof LOGO!=='undefined'?LOGO:'';
-const stamp=R?`<div class="bgdst paid"><div class="in"><span>PAID</span><small>${new Date(rc.paid_at).toLocaleDateString('en-NG')}</small></div></div>`:`<div class="bgdst due"><div class="in"><span>PAYMENT<br>PENDING</span></div></div>`;
+const stamp=(R||rc)?`<div class="bgdst paid"><div class="in"><span>PAID</span><small>${new Date(rc.paid_at).toLocaleDateString('en-NG')}</small></div></div>`:`<div class="bgdst due"><div class="in"><span>PAYMENT<br>PENDING</span></div></div>`;
 return `<style>
 .bgd{position:relative;max-width:720px;margin:auto;padding:10px;background:#FFFDF8;border:1px solid #B8893A;color:#2A1F22;font:14px/1.55 Georgia,'Cormorant Garamond',serif;-webkit-print-color-adjust:exact;print-color-adjust:exact}
 .bgdi{position:relative;padding:26px 22px 22px;border:2px solid #6D1837;background:url("data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20width=%27250%27%20height=%27150%27%3E%3Ctext%20x=%27125%27%20y=%2780%27%20text-anchor=%27middle%27%20font-family=%27Georgia,serif%27%20font-style=%27italic%27%20font-size=%2721%27%20fill=%27%23B8893A%27%20fill-opacity=%270.10%27%20transform=%27rotate%28-22%20125%2075%29%27%3EBimbsy%20Glam%20Fashion%3C/text%3E%3C/svg%3E") #FFFDF8;overflow:hidden}
@@ -185,7 +186,7 @@ return `<style>
 .bgdm .bgdl{margin-top:8px}
 table.bgdt2{width:100%;border-collapse:collapse;margin-top:6px}
 .bgdt2 th{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#6D1837;text-align:left;padding:8px 0;border-top:2px solid #B8893A;border-bottom:1px solid #B8893A}
-.bgdt2 th.r,.bgdc.r{text-align:right}
+.bgdt2 th.r,.bgdc.r{text-align:right;padding-left:12px;white-space:nowrap}.bgdt2 th:first-child,.bgdt2 td:first-child{width:100%}
 .bgdc{padding:9px 0;border-bottom:1px dotted #CDB892;vertical-align:top}.bgdn{font-weight:700}.bgds{font-size:12px;color:#5E5055}
 .bgdtot{margin:12px 0 0 auto;width:100%;max-width:280px}.bgdtot div{display:flex;justify-content:space-between;padding:2px 0}
 .bgdtot .g{border-top:2px solid #B8893A;margin-top:6px;padding-top:8px;font-size:20px;color:#6D1837;font-weight:700}
