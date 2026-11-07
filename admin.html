@@ -119,13 +119,54 @@ async function setDel(id){const r=await sb.rpc('admin_set_delivery',{p_order:id,
 async function cancelOrd(id){if(!confirm('Cancel this order and put its items back in stock?'))return;const r=await sb.rpc('admin_cancel_order',{p_order:id});if(r.error)return toast(r.error.message);toast('Order cancelled');reloadOrd(id)}
 const LOGO='data:image/png;base64,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';
 function docHTML(kind,d){const o=d.order,b=d.business||{},rc=d.receipt,inv=d.invoice,R=kind==='receipt';
-const rows=o.items.map(l=>`<tr><td style="padding:6px 0">${esc(l.name)}<br><span style="color:#5E5055;font-size:12px">${esc(l.color||'')}, ${esc(l.size)}</span></td><td style="text-align:right">${l.qty}</td><td style="text-align:right">${money(l.unit_price)}</td><td style="text-align:right">${money(l.line_total)}</td></tr>`).join('');
-const h3='<h3 style="font-size:20px;margin:18px 0 6px">';let pay='';
+const rows=o.items.map(l=>`<tr><td class="bgdc"><div class="bgdn">${esc(l.name)}</div><div class="bgds">${esc([l.color,l.size].filter(Boolean).join(' · '))}</div></td><td class="bgdc r">${l.qty}</td><td class="bgdc r">${money(l.unit_price)}</td><td class="bgdc r">${money(l.line_total)}</td></tr>`).join('');
+let pay='';
 if(R){const m=rc.method==='paystack'?'Paystack (online)':'Bank transfer',fee=rc.charged_kobo>rc.amount*100?Math.round((rc.charged_kobo-rc.amount*100)/100):0;
-pay=`${h3}Payment</h3><div>Method: ${m}</div><div>Payment reference: ${esc(rc.reference||'')}</div><div>Amount paid for order: <b>${money(rc.amount)}</b></div>${fee?`<div>Paystack processing fee: ${money(fee)}</div><div>Total charged: ${money(rc.amount+fee)}</div>`:''}<div>Date paid: ${new Date(rc.paid_at).toLocaleString('en-NG')}</div>`}
-else pay=`${h3}Payment instructions</h3>${d.bank&&d.bank.account_number?`<div>Bank transfer to ${esc(d.bank.bank)}, ${esc(d.bank.account_name)}, <b>${esc(d.bank.account_number)}</b></div><div>Use ${esc(o.ref)} as the payment reference.</div>`:'<div>Pay online with Paystack, or contact us on WhatsApp.</div>'}<p style="margin-top:14px"><b>This invoice is not proof of payment.</b> A receipt is issued only after payment is confirmed.</p>`;
+pay=`<div class="bgdl">Payment</div><div class="bgdbox"><div>Method: ${m}</div><div>Reference: ${esc(rc.reference||'')}</div><div>Amount paid for order: <b>${money(rc.amount)}</b></div>${fee?`<div>Paystack processing fee: ${money(fee)}</div><div>Total charged: ${money(rc.amount+fee)}</div>`:''}<div>Date paid: ${new Date(rc.paid_at).toLocaleString('en-NG')}</div></div>`}
+else if(rc)pay=`<div class="bgdl">Payment</div><div class="bgdbox"><div><b>Payment received.</b> Thank you!</div><div>Date paid: ${new Date(rc.paid_at).toLocaleDateString('en-NG')}</div><div>Your receipt number is <b>${esc(rc.receipt_number)}</b>. Open it from Track my order.</div></div>`;
+else pay=`<div class="bgdl">Payment instructions</div><div class="bgdbox">${d.bank&&d.bank.account_number?`<div>Bank transfer to ${esc(d.bank.bank)}, ${esc(d.bank.account_name)}</div><div class="bgdacc">${esc(d.bank.account_number)}</div><div>Use <b>${esc(o.ref)}</b> as the payment reference.</div>`:'<div>Pay online with Paystack, or contact us on WhatsApp.</div>'}</div><p class="bgdnote"><b>This invoice is not proof of payment.</b> A receipt is issued only after payment is confirmed.</p>`;
 const logo=typeof LOGO!=='undefined'?LOGO:'';
-return `<div style="background:#fff;color:#2A1F22;padding:20px;border:1px solid #E3D3BC;border-radius:4px;max-width:720px;margin:auto;font-size:14px;line-height:1.5"><div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap"><div>${logo?`<img src="${logo}" alt="" style="height:56px;display:block">`:''}<b>${esc(b.name||'Bimbsy Glam Fashion')}</b><div>${b.address?esc(b.address)+', ':''}${esc(b.city||'Lagos')}, ${esc(b.country||'Nigeria')}</div><div>${esc(b.email||'')}</div></div><div style="text-align:right"><div style="font-family:Georgia,serif;font-size:28px;color:#6D1837">${R?'RECEIPT':'INVOICE'}</div><div><b>${esc(R?rc.receipt_number:inv.invoice_number)}</b></div><div>Date: ${new Date(R?rc.issued_at:inv.issued_at).toLocaleDateString('en-NG')}</div><div>Order: ${esc(o.ref)}</div>${R?`<div>Invoice: ${esc(inv.invoice_number)}</div><div style="color:#1F5C4A"><b>PAID</b></div>`:''}</div></div>${h3}Customer</h3><div>${esc(o.name)}</div><div>${esc(o.phone)}${o.email?' · '+esc(o.email):''}</div><div>${esc(o.address)}, ${esc(o.city)}, ${esc(o.state)}${o.postal_code?' '+esc(o.postal_code):''}, ${esc(o.country)}</div><table style="width:100%;border-collapse:collapse;margin-top:14px"><tr style="border-bottom:1px solid #E3D3BC;text-align:left"><th>Item</th><th style="text-align:right">Qty</th><th style="text-align:right">Price</th><th style="text-align:right">Total</th></tr>${rows}</table><div style="text-align:right;margin-top:10px"><div>Subtotal: ${money(o.subtotal)}</div><div>Delivery: ${money(o.delivery_fee)}</div><div style="font-size:18px"><b>Total: ${money(o.total)}</b> <span style="color:#5E5055">(${esc(o.currency)})</span></div></div>${pay}</div>`}
+const stamp=(R||rc)?`<div class="bgdst paid"><div class="in"><span>PAID</span><small>${new Date(rc.paid_at).toLocaleDateString('en-NG')}</small></div></div>`:`<div class="bgdst due"><div class="in"><span>PAYMENT<br>PENDING</span></div></div>`;
+return `<style>
+.bgd{position:relative;max-width:720px;margin:auto;padding:10px;background:#FFFDF8;border:1px solid #B8893A;color:#2A1F22;font:14px/1.55 Georgia,'Cormorant Garamond',serif;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.bgdi{position:relative;padding:26px 22px 22px;border:2px solid #6D1837;background:url("data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20width=%27250%27%20height=%27150%27%3E%3Ctext%20x=%27125%27%20y=%2780%27%20text-anchor=%27middle%27%20font-family=%27Georgia,serif%27%20font-style=%27italic%27%20font-size=%2721%27%20fill=%27%23B8893A%27%20fill-opacity=%270.10%27%20transform=%27rotate%28-22%20125%2075%29%27%3EBimbsy%20Glam%20Fashion%3C/text%3E%3C/svg%3E") #FFFDF8;overflow:hidden}
+.bgd *{box-sizing:border-box}
+.bgdh{text-align:center}.bgdh img{height:70px;display:block;margin:0 auto 4px;mix-blend-mode:multiply}
+.bgdb{font-size:13px;letter-spacing:5px;color:#6D1837;font-weight:700;text-transform:uppercase}
+.bgdt{font-style:italic;color:#B8893A;font-size:14px;margin-top:2px}
+.bgdor{display:flex;align-items:center;gap:10px;margin:14px 0;color:#B8893A}.bgdor:before,.bgdor:after{content:"";flex:1;height:1px;background:linear-gradient(90deg,transparent,#B8893A,transparent)}
+.bgdk{text-align:center;font-size:26px;letter-spacing:8px;color:#6D1837;text-transform:uppercase;margin:4px 0 14px}
+.bgdm{display:flex;gap:18px;flex-wrap:wrap;justify-content:space-between;margin-top:6px}.bgdm>div{flex:1 1 220px}
+.bgdl{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#B8893A;font-weight:700;margin:18px 0 6px;border-bottom:1px solid #E3D3BC;padding-bottom:4px}
+.bgdm .bgdl{margin-top:8px}
+table.bgdt2{width:100%;border-collapse:collapse;margin-top:6px}
+.bgdt2 th{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#6D1837;text-align:left;padding:8px 0;border-top:2px solid #B8893A;border-bottom:1px solid #B8893A}
+.bgdt2 th.r,.bgdc.r{text-align:right;padding-left:12px;white-space:nowrap}.bgdt2 th:first-child,.bgdt2 td:first-child{width:100%}
+.bgdc{padding:9px 0;border-bottom:1px dotted #CDB892;vertical-align:top}.bgdn{font-weight:700}.bgds{font-size:12px;color:#5E5055}
+.bgdtot{margin:12px 0 0 auto;width:100%;max-width:280px}.bgdtot div{display:flex;justify-content:space-between;padding:2px 0}
+.bgdtot .g{border-top:2px solid #B8893A;margin-top:6px;padding-top:8px;font-size:20px;color:#6D1837;font-weight:700}
+.bgdbox{border-left:3px solid #B8893A;background:rgba(251,246,236,.85);padding:8px 12px}.bgdacc{font-size:22px;letter-spacing:2px;color:#6D1837;font-weight:700}
+.bgdnote{font-size:13px;margin:10px 0 0}
+.bgdst{position:absolute;right:22px;top:118px;width:104px;height:104px;border-radius:50%;transform:rotate(-14deg);display:flex;align-items:center;justify-content:center;font-weight:700;opacity:.9}
+.bgdst .in{width:92px;height:92px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;line-height:1.1}
+.bgdst.paid{border:3px solid #1F5C4A;color:#1F5C4A}.bgdst.paid .in{border:1px solid #1F5C4A}.bgdst.paid span{font-size:24px;letter-spacing:3px}.bgdst small{font-size:10px;letter-spacing:1px;margin-top:3px}
+.bgdst.due{border:2px dashed #9B6B73;color:#9B6B73}.bgdst.due .in{border:1px solid #9B6B73}.bgdst.due span{font-size:11px;letter-spacing:2px}
+.bgdf{text-align:center;margin-top:22px;padding-top:12px;border-top:1px solid #E3D3BC}.bgdf .ty{font-style:italic;font-size:17px;color:#6D1837}.bgdf .sm{font-size:12px;color:#5E5055;margin-top:4px}.bgdf .tg{letter-spacing:4px;font-size:11px;color:#B8893A;text-transform:uppercase;margin-top:8px}
+@media(max-width:480px){.bgdst{position:static;transform:rotate(-8deg);margin:10px auto 0}.bgdk{font-size:21px;letter-spacing:5px}}
+</style>
+<div class="bgd"><div class="bgdi">
+<div class="bgdh">${logo?`<img src="${logo}" alt="">`:''}<div class="bgdb">${esc(b.name||'Bimbsy Glam Fashion')}</div><div class="bgdt">Elegance in Every Stitch.</div></div>
+<div class="bgdor">&#9670;</div>
+<div class="bgdk">${R?'Payment Receipt':'Invoice'}</div>
+${stamp}
+<div class="bgdm"><div><div class="bgdl">${R?'Receipt':'Invoice'} details</div><div><b>No.</b> ${esc(R?rc.receipt_number:inv.invoice_number)}</div><div><b>Date:</b> ${new Date(R?rc.issued_at:inv.issued_at).toLocaleDateString('en-NG')}</div><div><b>Order:</b> ${esc(o.ref)}</div>${R?`<div><b>Invoice:</b> ${esc(inv.invoice_number)}</div>`:''}</div>
+<div><div class="bgdl">Billed to</div><div><b>${esc(o.name)}</b></div><div>${esc(o.phone)}${o.email?' · '+esc(o.email):''}</div><div>${esc(o.address)}, ${esc(o.city)}, ${esc(o.state)}${o.postal_code?' '+esc(o.postal_code):''}, ${esc(o.country)}</div></div></div>
+<div class="bgdl">Items</div>
+<table class="bgdt2"><tr><th>Item</th><th class="r">Qty</th><th class="r">Price</th><th class="r">Total</th></tr>${rows}</table>
+<div class="bgdtot"><div><span>Subtotal</span><span>${money(o.subtotal)}</span></div><div><span>Delivery</span><span>${money(o.delivery_fee)}</span></div><div class="g"><span>Total (${esc(o.currency)})</span><span>${money(o.total)}</span></div></div>
+${pay}
+<div class="bgdf"><div class="ty">Thank you for choosing ${esc(b.name||'Bimbsy Glam Fashion')}.</div><div class="sm">${b.address?esc(b.address)+', ':''}${esc(b.city||'Lagos')}, ${esc(b.country||'Nigeria')}${b.email?' · '+esc(b.email):''}</div><div class="tg">Bimbsy Glam Fashion &middot; Est. 2021</div></div>
+</div></div>`}
 let ADOC=null,AOID=null;
 async function admDoc(id,kind){const r=await sb.rpc('admin_order_docs',{p_order:id});if(r.error)return toast(r.error.message);ADOC=r.data;AOID=id;
 app.innerHTML=`${bar('ordBack')}<div class="w"><div class="row noprint" style="margin:12px 0"><button class="btn" onclick="window.print()">Print / Save as PDF</button></div>${docHTML(kind==='receipt'&&ADOC.receipt?'receipt':'invoice',ADOC)}</div>`}
@@ -138,5 +179,38 @@ app.innerHTML=`${bar('msgList')}<div class="w"><h1>${esc(m.subject||'Message')}<
 async function msgDel(id){if(!confirm('Delete this message?'))return;const r=await sb.from('contact_messages').delete().eq('id',id);if(r.error)return toast(r.error.message);toast('Deleted');msgList()}
 start();
 </script>
-<a href="index.html" style="position:fixed;left:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:50;background:#6D1837;color:#FBF6EC;padding:9px 14px;border-radius:20px;font:600 13px system-ui,sans-serif;text-decoration:none;box-shadow:0 2px 10px rgba(0,0,0,.25)">&larr; Back to store</a></body>
+<a href="index.html" style="position:fixed;left:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:50;background:#6D1837;color:#FBF6EC;padding:9px 14px;border-radius:20px;font:600 13px system-ui,sans-serif;text-decoration:none;box-shadow:0 2px 10px rgba(0,0,0,.25)">&larr; Back to store</a>
+<button id="pnB" type="button" style="display:none;position:fixed;right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:60;background:#1F5C4A;color:#fff;border:0;border-radius:24px;padding:11px 16px;font:600 13px system-ui,sans-serif;box-shadow:0 2px 10px rgba(0,0,0,.3)">Phone alerts</button>
+<div id="pnP" style="display:none;position:fixed;left:12px;right:12px;bottom:calc(64px + env(safe-area-inset-bottom,0px));z-index:61;max-width:380px;margin-left:auto;background:#FFFDF8;border:1px solid #B8893A;border-radius:10px;padding:14px;font:14px/1.5 system-ui,sans-serif;color:#2A1F22;box-shadow:0 8px 30px rgba(0,0,0,.35)">
+<b>Phone alerts</b><p id="pnS" style="margin:6px 0 10px;color:#5E5055">Checking…</p>
+<button id="pnOn" type="button" style="background:#6D1837;color:#fff;border:0;border-radius:6px;padding:9px 12px;margin:0 6px 6px 0">Turn on</button>
+<button id="pnTest" type="button" style="background:#B8893A;color:#2A1F22;border:0;border-radius:6px;padding:9px 12px;margin:0 6px 6px 0">Send test</button>
+<button id="pnOff" type="button" style="background:#eee;border:0;border-radius:6px;padding:9px 12px;margin:0 6px 6px 0">Turn off</button>
+<button id="pnX" type="button" style="background:none;border:0;color:#5E5055;padding:9px 6px">Close</button></div>
+<script>
+(function(){
+var B=document.getElementById('pnB'),P=document.getElementById('pnP'),S=document.getElementById('pnS');
+function say(t){S.textContent=t}
+function u8(b){var p='='.repeat((4-b.length%4)%4),s=(b+p).replace(/-/g,'+').replace(/_/g,'/'),r=atob(s),o=new Uint8Array(r.length);for(var i=0;i<r.length;i++)o[i]=r.charCodeAt(i);return o}
+async function call(body){var s=await sb.auth.getSession();var t=s.data&&s.data.session&&s.data.session.access_token;if(!t)throw new Error('Please sign in again.');
+ var r=await fetch(SB_URL+'/functions/v1/push-admin',{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+t,apikey:SB_KEY},body:JSON.stringify(body)});
+ var j=await r.json().catch(function(){return{}});if(!r.ok)throw new Error(j.error||'Request failed');return j}
+async function reg(){if(!('serviceWorker' in navigator)||!('PushManager' in window))throw new Error('This browser does not support phone alerts.');
+ var r=await navigator.serviceWorker.register('sw.js');await navigator.serviceWorker.ready;return r}
+async function status(){try{
+ if(!('Notification' in window)){say('This browser does not support phone alerts.');return}
+ if(Notification.permission==='denied'){say('Notifications are blocked. Open the browser site settings and allow notifications for this site.');return}
+ var r=await reg(),s=await r.pushManager.getSubscription();say(s?'Phone alerts are ON for this phone.':'Phone alerts are OFF on this phone.')}catch(e){say(e.message)}}
+B.onclick=function(){P.style.display=P.style.display==='block'?'none':'block';if(P.style.display==='block')status()};
+document.getElementById('pnX').onclick=function(){P.style.display='none'};
+document.getElementById('pnOn').onclick=async function(){try{say('Setting up…');
+ var p=await Notification.requestPermission();if(p!=='granted'){say('Permission was not given. Allow notifications to turn alerts on.');return}
+ var r=await reg(),k=(await call({action:'key'})).key,s=await r.pushManager.getSubscription();
+ if(!s)s=await r.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:u8(k)});
+ await call({action:'subscribe',subscription:s.toJSON()});say('Phone alerts are ON. Tap Send test to check.')}catch(e){say('Could not turn on: '+e.message)}};
+document.getElementById('pnTest').onclick=async function(){try{say('Sending test…');var j=await call({action:'test'});say(j.sent>0?'Test sent. You should see it on this phone in a few seconds.':'No phone is registered yet. Tap Turn on first.')}catch(e){say('Test failed: '+e.message)}};
+document.getElementById('pnOff').onclick=async function(){try{var r=await reg(),s=await r.pushManager.getSubscription();if(s){await call({action:'unsubscribe',endpoint:s.endpoint});await s.unsubscribe()}say('Phone alerts are OFF on this phone.')}catch(e){say(e.message)}};
+setInterval(async function(){try{var s=await sb.auth.getSession();B.style.display=(s.data&&s.data.session)?'block':'none';if(!(s.data&&s.data.session))P.style.display='none'}catch(e){}},1500);
+})();
+</script></body>
 </html>
