@@ -1,6 +1,6 @@
 // Bimbsy Glam Fashion service worker. Caches only public, non-personal files.
 // Never caches: admin pages, Supabase calls, Paystack, order or customer data.
-const VERSION = 'bg-v1';
+const VERSION = 'bg-v2';
 const SHELL = ['./offline.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './apple-touch-icon.png'];
 
 self.addEventListener('install', (e) => {
@@ -27,4 +27,24 @@ self.addEventListener('fetch', (e) => {
     return;
   }
   e.respondWith(caches.match(req).then((r) => r || fetch(req)));
+});
+
+// Founder phone alerts (Web Push). The push carries no private data; the app opens the admin orders.
+self.addEventListener('push', (e) => {
+  e.waitUntil(self.registration.showNotification('Bimbsy Glam: new order activity', {
+    body: 'Tap to open your orders.',
+    icon: 'icon-192.png',
+    badge: 'icon-192.png',
+    tag: 'bg-order',
+    renotify: true,
+    data: { url: 'admin.html#orders' },
+  }));
+});
+self.addEventListener('notificationclick', (e) => {
+  e.notification.close();
+  const url = (e.notification.data && e.notification.data.url) || 'admin.html';
+  e.waitUntil(clients.matchAll({ type: 'window', includeUncontrolled: true }).then((list) => {
+    for (const c of list) { if (c.url.includes('admin.html') && 'focus' in c) return c.focus(); }
+    return clients.openWindow(url);
+  }));
 });
