@@ -4,6 +4,7 @@ const VERSION = 'bg-v2';
 const SHELL = ['./offline.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './apple-touch-icon.png'];
 
 self.addEventListener('install', (e) => {
+  self.skipWaiting();
   e.waitUntil(caches.open(VERSION).then((c) => c.addAll(SHELL)));
 });
 self.addEventListener('activate', (e) => {

@@ -184,7 +184,7 @@ start();
 <div id="pnP" style="display:none;position:fixed;left:12px;right:12px;bottom:calc(64px + env(safe-area-inset-bottom,0px));z-index:61;max-width:380px;margin-left:auto;background:#FFFDF8;border:1px solid #B8893A;border-radius:10px;padding:14px;font:14px/1.5 system-ui,sans-serif;color:#2A1F22;box-shadow:0 8px 30px rgba(0,0,0,.35)">
 <b>Phone alerts</b><p id="pnS" style="margin:6px 0 10px;color:#5E5055">Checking…</p>
 <button id="pnOn" type="button" style="background:#6D1837;color:#fff;border:0;border-radius:6px;padding:9px 12px;margin:0 6px 6px 0">Turn on</button>
-<button id="pnTest" type="button" style="background:#B8893A;color:#2A1F22;border:0;border-radius:6px;padding:9px 12px;margin:0 6px 6px 0">Send test</button>
+<button id="pnLocal" type="button" style="background:#fff;border:1px solid #1F5C4A;color:#1F5C4A;border-radius:6px;padding:9px 12px;margin:0 6px 6px 0">Show here</button><button id="pnTest" type="button" style="background:#B8893A;color:#2A1F22;border:0;border-radius:6px;padding:9px 12px;margin:0 6px 6px 0">Send test</button>
 <button id="pnOff" type="button" style="background:#eee;border:0;border-radius:6px;padding:9px 12px;margin:0 6px 6px 0">Turn off</button>
 <button id="pnX" type="button" style="background:none;border:0;color:#5E5055;padding:9px 6px">Close</button></div>
 <script>
@@ -208,6 +208,10 @@ document.getElementById('pnOn').onclick=async function(){try{say('Setting up…'
  var r=await reg(),k=(await call({action:'key'})).key,s=await r.pushManager.getSubscription();
  if(!s)s=await r.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:u8(k)});
  await call({action:'subscribe',subscription:s.toJSON()});say('Phone alerts are ON. Tap Send test to check.')}catch(e){say('Could not turn on: '+e.message)}};
+document.getElementById('pnLocal').onclick=async function(){try{
+ if(Notification.permission!=='granted'){say('Permission is '+Notification.permission+'. Tap Turn on and allow notifications first.');return}
+ var r=await reg();await r.showNotification('Bimbsy Glam: local test',{body:'If you can see this, your phone can show alerts.',icon:'icon-192.png',badge:'icon-192.png',tag:'bg-local'});
+ say('Local test shown. If you did not see it, check your phone notification settings for this app.')}catch(e){say('Local test failed: '+e.message)}};
 document.getElementById('pnTest').onclick=async function(){try{say('Sending test…');var j=await call({action:'test'});say(j.sent>0?'Test sent. You should see it on this phone in a few seconds.':'No phone is registered yet. Tap Turn on first.')}catch(e){say('Test failed: '+e.message)}};
 document.getElementById('pnOff').onclick=async function(){try{var r=await reg(),s=await r.pushManager.getSubscription();if(s){await call({action:'unsubscribe',endpoint:s.endpoint});await s.unsubscribe()}say('Phone alerts are OFF on this phone.')}catch(e){say(e.message)}};
 setInterval(async function(){try{var s=await sb.auth.getSession();B.style.display=(s.data&&s.data.session)?'block':'none';if(!(s.data&&s.data.session))P.style.display='none'}catch(e){}},1500);
